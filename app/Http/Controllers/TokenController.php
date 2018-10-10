@@ -32,10 +32,10 @@ class TokenController extends Controller
     }
 
 
-    private function checkSignature()
+    static public function checkSignature()
     {
         // you must define TOKEN by yourself
-        if (!$this->token) {
+        if (!self::token) {
             throw new Exception('TOKEN is not defined!');
         }
 
@@ -43,7 +43,7 @@ class TokenController extends Controller
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];
 
-        $token = $this->token;
+        $token = self::token;
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode($tmpArr);

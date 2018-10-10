@@ -7,11 +7,35 @@ use Ixudra\Curl\Facades\Curl;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\ButtonController;
+use App\Http\Controllers\MessageController;
 
 class WeChatController extends Controller
 {
 
     public function index()
+    {
+        //验证token
+        $echoStr = $_GET["echostr"];
+        if ($this->checkSignature()) {
+            echo $echoStr;
+            exit;
+        }
+        //获取微信传来的消息
+        $postStr = file_get_contents('php://input');
+        if (!$postStr) {
+            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $fromUsername = $postObj->FromUserName;
+            $toUsername = $postObj->ToUserName;
+            $MsgT = $postObj->MsgType;
+            $time = time();
+            //如果用户发送的为文本消息
+            if ($MsgT == "text") {
+                MessageController::responseMsg($postObj);
+            }
+        }
+    }
+
+    public function button()
     {
         $button = ButtonController::getButton();
         $token = Redis::get('wxgzh_token');
