@@ -16,7 +16,7 @@ class WeChatController extends Controller
     {
         //验证token
         $echoStr = $_GET["echostr"];
-        if ($this->checkSignature()) {
+        if (TokenController::checkSignature()) {
             echo $echoStr;
             exit;
         }
