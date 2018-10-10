@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Redis;
 
 class TokenController extends Controller
 {
-    private $token = 'QvBiLam';
-
     //验证服务器token
     public function valid()
     {
@@ -35,7 +33,7 @@ class TokenController extends Controller
     static public function checkSignature()
     {
         // you must define TOKEN by yourself
-        if (!self::token) {
+        if (!env('wxgzh_token')) {
             throw new Exception('TOKEN is not defined!');
         }
 
@@ -43,7 +41,7 @@ class TokenController extends Controller
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];
 
-        $token = self::token;
+        $token = env('wxgzh_token');
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode($tmpArr);
