@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 class MessageController extends Controller
 {
     //
-//    public function
+    public function responseMsg(Request $request)
+    {
+        echo 123;
+    }
 }
