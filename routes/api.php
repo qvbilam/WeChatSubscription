@@ -28,4 +28,7 @@ Route::any('deleteButton', 'ButtonController@deleteButton'); //删除Button
 Route::any('getButton', 'ButtonController@getButton'); //获取button
 
 
+/*消息*/
+Route::any('responseMsg', 'MessageController@responseMsg'); //被动回复消息
+
 
