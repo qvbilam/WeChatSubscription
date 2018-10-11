@@ -36,7 +36,7 @@ class MessageController extends Controller
 
     static public function textMsg($postArray)
     {
-        return "openid是：" . $postArray['$fromUsername'];
+        return "openid是：" . $postArray['FromUserName'];
     }
 
     static public function eventMsg($postArray)
