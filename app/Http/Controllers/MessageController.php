@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\UserMsg;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -32,6 +33,6 @@ class MessageController extends Controller
 
     static public function saveTxtMsg($data)
     {
-        UserMsg::create($data);
+        UserMsg::updateOrcreate(['MsgId'=>''],$data);
     }
 }
