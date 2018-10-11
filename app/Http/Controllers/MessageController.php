@@ -28,7 +28,7 @@ class MessageController extends Controller
         //需要保存的信息
         self::$data['ToUserName'] = $toUsername;
         self::$data['FromUserName'] = $fromUsername;
-        self::$data['MsgType'] = $key;
+        self::$data['MsgType'] = $postArray['MsgType'];
         self::saveMsg(self::$data);
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
         return $resultStr;
