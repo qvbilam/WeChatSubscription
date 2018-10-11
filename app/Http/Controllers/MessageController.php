@@ -20,12 +20,12 @@ class MessageController extends Controller
         $msgType = "text";
         $contentStr = "openid是：" . $fromUsername;
         $data = [
-            'ToUserName' => $toUsername,
-            'FromUserName' => '',
+            'ToUserName' => ' ',
+            'FromUserName' => $fromUsername,
             'MsgType' => $msgType,
             'Content' => $contentStr,
         ];
-//        self::saveTxtMsg($data);
+        self::saveTxtMsg($data);
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
         return $resultStr;
     }
