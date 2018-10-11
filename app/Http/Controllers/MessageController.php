@@ -68,10 +68,10 @@ class MessageController extends Controller
         $content = trim($postArray['Content']);
         if ($content == '获取id') {
             $content = "openid是：" . $postArray['FromUserName'];
+            return $content;
         }
         self::$data['Content'] = trim($postArray['Content']);
         self::saveMsg(self::$data);
-        return $content;
     }
 
     //事件消息
@@ -79,13 +79,13 @@ class MessageController extends Controller
     {
         //关注事件
         if($postArray['Event'] == 'subscribe'){
-            //self::$data['Content'] = $postArray['Event'];
             return '欢迎关注';
         }
         //联系我们
         if($postArray['Event'] == 'CLICK' && $postArray['EventKey'] == 'call_us'){
             return '请您添加下小按微信：Seven_Lee_yeah,里面有专业人士为您解答问题';
         }
+        return 'TMD event判断有问题';
 
     }
 
