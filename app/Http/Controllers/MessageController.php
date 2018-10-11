@@ -19,7 +19,6 @@ class MessageController extends Controller
         $msgType = "text";
         $contentStr = "openid是：" . $fromUsername;
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-        echo $resultStr;
-        exit;
+        return $resultStr;
     }
 }

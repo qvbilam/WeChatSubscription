@@ -32,7 +32,8 @@ class WeChatController extends Controller
             $time = time();
             //如果用户发送的为文本消息
             if ($MsgT == "text") {
-                MessageController::responseMsg($postObj);
+                echo MessageController::responseMsg($postObj);
+                exit;
             }
         }
     }
