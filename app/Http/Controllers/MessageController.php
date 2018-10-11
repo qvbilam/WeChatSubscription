@@ -43,7 +43,7 @@ class MessageController extends Controller
 
     static public function eventMsg($postArray)
     {
-        self::$data['Content'] = '关注';
+        self::$data['Content'] = $postArray['Event'];
         return '欢迎关注';
     }
 
