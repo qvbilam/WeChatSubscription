@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\UserMsg;
 
 class MessageController extends Controller
 {
@@ -13,12 +14,23 @@ class MessageController extends Controller
         $toUsername = $postObj->ToUserName;
         $time = time();
         $key = trim($postObj->Content);
-        $fromUsername = $postObj->FromUserName;
         $textTpl = "<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName>
                             <CreateTime>%s</CreateTime><MsgType><![CDATA[%s]]></MsgType><Content><![CDATA[%s]]></Content></xml>";
         $msgType = "text";
         $contentStr = "openid是：" . $fromUsername;
+        $data = [
+            'ToUserName' => $toUsername,
+            'FromUserName' => $fromUsername,
+            'MsgType' => $msgType,
+            'Content' => $contentStr,
+        ];
+        self::saveTxtMsg($data);
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
         return $resultStr;
+    }
+
+    static public function saveTxtMsg($data)
+    {
+        UserMsg::create($data);
     }
 }
