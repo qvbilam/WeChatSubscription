@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\DB;
 class MessageController extends Controller
 {
     //
-    static public function responseMsg($postObj)
+    static public function responseMsg($postArray)
     {
-        $fromUsername = $postObj->FromUserName;
-        $toUsername = $postObj->ToUserName;
+        $fromUsername = $postArray['FromUserName'];
+        $toUsername = $postArray['ToUserName'];
         $time = time();
-        $key = trim($postObj->Content);
+        $key = trim($postArray['Content']);
         $textTpl = "<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName>
                             <CreateTime>%s</CreateTime><MsgType><![CDATA[%s]]></MsgType><Content><![CDATA[%s]]></Content></xml>";
         $msgType = "text";
@@ -33,7 +33,6 @@ class MessageController extends Controller
 
     static public function saveTxtMsg($data)
     {
-//        UserMsg::updateOrcreate(['MsgId'=>''],$data);
-        DB::insert($data);
+        UserMsg::create($data);
     }
 }

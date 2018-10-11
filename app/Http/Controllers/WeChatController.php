@@ -26,14 +26,12 @@ class WeChatController extends Controller
         //获取微信传来的消息
         $postStr = file_get_contents('php://input');
         if ($postStr) {
-            Log::info($postStr);
-            $array_data = json_decode(json_encode(simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
-            Log::info($array_data);
-            die();
-            $MsgT = $postObj->MsgType;
+            $postArray = json_decode(json_encode(simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+            Log::info($postArray);
+            $MsgT = Log::info('wxmsg : ' . json_encode($postArray['MsgType']));
             //如果用户发送的为文本消息
             if ($MsgT == "text") {
-                echo MessageController::responseMsg($postObj);
+                echo MessageController::responseMsg($postArray);
                 exit;
             }
         }
