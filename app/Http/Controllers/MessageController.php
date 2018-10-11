@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class MessageController extends Controller
 {
     //存储数组
-    protected $data = [];
+    static protected $data = [];
 
     //回复消息
     static public function responseMsg($postArray)
