@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
+    //存储数组
+    protected $data = [];
+
     //回复消息
     static public function responseMsg($postArray)
     {
@@ -23,24 +26,24 @@ class MessageController extends Controller
         $contentStr = self::typeMsg($postArray);
 //        $contentStr = "openid是：" . $fromUsername;
         //需要保存的信息
-        $data = [
-            'ToUserName' => $toUsername,
-            'FromUserName' => $fromUsername,
-            'MsgType' => $postArray['MsgType'],
-            'Content' => $key,
-        ];
-        self::saveMsg($data);
+        self::$data['ToUserName'] = $toUsername;
+        self::$data['FromUserName'] = $fromUsername;
+        self::$data['MsgType'] = $key;
+        self::saveMsg(self::$data);
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
         return $resultStr;
     }
 
     static public function textMsg($postArray)
     {
-        return "openid是：" . $postArray['FromUserName'];
+        $content = "openid是：" . $postArray['FromUserName'];
+        self::$data['Content'] = $content;
+        return $content;
     }
 
     static public function eventMsg($postArray)
     {
+        self::$data['Content'] = '关注';
         return '欢迎关注';
     }
 
@@ -48,11 +51,11 @@ class MessageController extends Controller
     static public function typeMsg($postArray)
     {
         $type = $postArray['MsgType'];
-        switch ($type){
-            case $type=='text':
+        switch ($type) {
+            case $type == 'text':
                 return self::textMsg($postArray);
                 break;
-            case $type=='event':
+            case $type == 'event':
                 return self::eventMsg($postArray);
                 break;
         }
