@@ -15,10 +15,12 @@ class WeChatController extends Controller
     public function index()
     {
         //验证token
-        $echoStr = $_GET["echostr"];
-        if (TokenController::checkSignature()) {
-            echo $echoStr;
-            exit;
+        $echoStr = @$_GET["echostr"];
+        if ($echoStr) {
+            if(TokenController::checkSignature()){
+                echo $echoStr;
+                exit;
+            }
         }
         //获取微信传来的消息
         $postStr = file_get_contents('php://input');
