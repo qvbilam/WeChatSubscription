@@ -30,7 +30,6 @@ class MessageController extends Controller
         self::$data['ToUserName'] = $toUsername;
         self::$data['FromUserName'] = $fromUsername;
         self::$data['MsgType'] = $postArray['MsgType'];
-        self::saveMsg(self::$data);
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
         return $resultStr;
     }
@@ -49,23 +48,6 @@ class MessageController extends Controller
                     <Url>< ![CDATA[%s] ]></Url></item></Articles></xml>";
     }
 
-
-    static public function textMsg($postArray)
-    {
-        $content = trim($postArray['Content']);
-        if ($content == '获取id') {
-            $content = "openid是：" . $postArray['FromUserName'];
-        }
-        self::$data['Content'] = trim($postArray['Content']);
-        return $content;
-    }
-
-    static public function eventMsg($postArray)
-    {
-        self::$data['Content'] = $postArray['Event'];
-        return '欢迎关注';
-    }
-
     //消息类型判断
     static public function typeMsg($postArray)
     {
@@ -78,6 +60,33 @@ class MessageController extends Controller
                 return self::eventMsg($postArray);
                 break;
         }
+    }
+
+    //普通消息
+    static public function textMsg($postArray)
+    {
+        $content = trim($postArray['Content']);
+        if ($content == '获取id') {
+            $content = "openid是：" . $postArray['FromUserName'];
+        }
+        self::$data['Content'] = trim($postArray['Content']);
+        self::saveMsg(self::$data);
+        return $content;
+    }
+
+    //事件消息
+    static public function eventMsg($postArray)
+    {
+        //关注事件
+        if($postArray['Event'] == 'subscribe'){
+            //self::$data['Content'] = $postArray['Event'];
+            return '欢迎关注';
+        }
+        //联系我们
+        if($postArray['Event'] == 'CLICK' && $postArray['EventKey'] == 'call_us'){
+            return '请您添加下小按微信：Seven_Lee_yeah,里面有专业人士为您解答问题';
+        }
+
     }
 
     //保存消息

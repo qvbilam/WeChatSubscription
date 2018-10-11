@@ -48,10 +48,6 @@ class ButtonController extends Controller
         return $response;
     }
 
-    static function clickButton()
-    {
-        $content = '请您添加下小按微信：Seven_Lee_yeah,里面有专业人士为您解答问题';
-    }
 
     static public function ButtonData()
     {
@@ -98,11 +94,6 @@ class ButtonController extends Controller
                         {    
                             "type":"view",
                             "name":"司机绑定",
-                            "url":"http://www.soso.com/"
-                        },
-                        {    
-                            "type":"view",
-                            "name":"帮助中心",
                             "url":"http://www.soso.com/"
                         },
                         {    
