@@ -9,6 +9,8 @@ use App\Http\Controllers\TokenController;
 use App\Http\Controllers\ButtonController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Log;
+use App\Model\UserMsg;
+
 
 class WeChatController extends Controller
 {
@@ -49,6 +51,7 @@ class WeChatController extends Controller
             ->get();
         return $response;
     }
+    
 
 
 }

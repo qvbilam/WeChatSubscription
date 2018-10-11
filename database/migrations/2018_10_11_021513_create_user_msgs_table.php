@@ -11,7 +11,6 @@ class CreateUserMsgsTable extends Migration
      *
      * @return void
      */
-    protected $fillable = ['ToUserName', 'FromUserName','MsgType','Content'];
 
     public function up()
     {
