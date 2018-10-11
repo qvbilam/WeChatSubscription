@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\UserMsg;
+use Illuminate\Support\Facades\Log;
 
 class MessageController extends Controller
 {
