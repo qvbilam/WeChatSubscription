@@ -21,7 +21,7 @@ class MessageController extends Controller
         $contentStr = "openid是：" . $fromUsername;
         $data = [
             'ToUserName' => $toUsername,
-            'FromUserName' => $fromUsername,
+            'FromUserName' => '',
             'MsgType' => $msgType,
             'Content' => $contentStr,
         ];
