@@ -18,7 +18,7 @@ class MessageController extends Controller
         $fromUsername = $postArray['FromUserName'];
         $toUsername = $postArray['ToUserName'];
         $time = time();
-        $key = trim($postArray['Content']);
+        //$key = trim($postArray['Content']);
         $textTpl = "<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName>
                             <CreateTime>%s</CreateTime><MsgType><![CDATA[%s]]></MsgType><Content><![CDATA[%s]]></Content></xml>";
         $msgType = "text";
@@ -37,7 +37,7 @@ class MessageController extends Controller
     static public function textMsg($postArray)
     {
         $content = "openid是：" . $postArray['FromUserName'];
-        self::$data['Content'] = $content;
+        self::$data['Content'] = trim($postArray['Content']);
         return $content;
     }
 
