@@ -20,7 +20,7 @@ class WeChatController extends Controller
         //验证token
         $echoStr = @$_GET["echostr"];
         if ($echoStr) {
-            if(TokenController::checkSignature()){
+            if (TokenController::checkSignature()) {
                 echo $echoStr;
                 exit;
             }
@@ -36,7 +36,14 @@ class WeChatController extends Controller
                 echo MessageController::responseMsg($postArray);
                 exit;
             }
+            //关注事件
+            if ($MsgT == "event") {
+                //取关用户也收不到公众号信息所以不做判断
+
+            }
         }
+
+
     }
 
     public function button()
@@ -51,7 +58,6 @@ class WeChatController extends Controller
             ->get();
         return $response;
     }
-
 
 
 }
