@@ -20,7 +20,7 @@ class MessageController extends Controller
         $msgType = "text";
         $contentStr = "openid是：" . $fromUsername;
         $data = [
-            'ToUserName' => ' ',
+            'ToUserName' => $toUsername,
             'FromUserName' => $fromUsername,
             'MsgType' => $msgType,
             'Content' => $contentStr,
