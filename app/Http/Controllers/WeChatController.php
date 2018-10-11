@@ -26,6 +26,7 @@ class WeChatController extends Controller
         //获取微信传来的消息
         $postStr = file_get_contents('php://input');
         if ($postStr) {
+            Log::info($postStr);
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
             $MsgT = $postObj->MsgType;
             //如果用户发送的为文本消息
