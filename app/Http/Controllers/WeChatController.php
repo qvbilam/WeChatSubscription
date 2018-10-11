@@ -27,8 +27,9 @@ class WeChatController extends Controller
         $postStr = file_get_contents('php://input');
         if ($postStr) {
             Log::info($postStr);
-            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-            Log::info($postObj);
+            $array_data = json_decode(json_encode(simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+            Log::info($array_data);
+            die();
             $MsgT = $postObj->MsgType;
             //如果用户发送的为文本消息
             if ($MsgT == "text") {
