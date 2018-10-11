@@ -33,6 +33,7 @@ class MessageController extends Controller
 
     static public function saveTxtMsg($data)
     {
-        UserMsg::updateOrcreate(['MsgId'=>''],$data);
+//        UserMsg::updateOrcreate(['MsgId'=>''],$data);
+        DB::insert($data);
     }
 }
