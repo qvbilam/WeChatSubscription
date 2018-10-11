@@ -51,7 +51,7 @@ class WeChatController extends Controller
             ->get();
         return $response;
     }
-    
+
 
 
 }

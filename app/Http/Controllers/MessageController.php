@@ -24,7 +24,7 @@ class MessageController extends Controller
             'ToUserName' => $toUsername,
             'FromUserName' => $fromUsername,
             'MsgType' => $msgType,
-            'Content' => $contentStr,
+            'Content' => $key,
         ];
         self::saveTxtMsg($data);
         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
