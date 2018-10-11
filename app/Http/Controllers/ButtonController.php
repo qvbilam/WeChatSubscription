@@ -19,7 +19,7 @@ class ButtonController extends Controller
         }
         $response = Curl::to('https://api.weixin.qq.com/cgi-bin/menu/create')
             ->withData(['access_token' => $token, 'body' => $button])
-            ->get();
+            ->post();
         return $response;
 
     }
