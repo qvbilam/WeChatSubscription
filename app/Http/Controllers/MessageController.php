@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\UserMsg;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Ixudra\Curl\Facades\Curl;
 
 class MessageController extends Controller
 {
@@ -34,9 +35,27 @@ class MessageController extends Controller
         return $resultStr;
     }
 
+    //回复图文消息
+    static public function PicMsg()
+    {
+        $textTpl = "<xml><ToUserName>< ![CDATA[%s] ]></ToUserName>
+                    <FromUserName>< ![CDATA[%s] ]></FromUserName>
+                    <CreateTime>%s</CreateTime>
+                    <MsgType>< ![CDATA[%s] ]></MsgType>
+                    <ArticleCount>1</ArticleCount><Articles><item>
+                    <Title>< ![CDATA[%s] ]></Title> 
+                    <Description>< ![CDATA[%s] ]></Description>
+                    <PicUrl>< ![CDATA[%s] ]></PicUrl>
+                    <Url>< ![CDATA[%s] ]></Url></item></Articles></xml>";
+    }
+
+
     static public function textMsg($postArray)
     {
-        $content = "openid是：" . $postArray['FromUserName'];
+        $content = trim($postArray['Content']);
+        if ($content == '获取id') {
+            $content = "openid是：" . $postArray['FromUserName'];
+        }
         self::$data['Content'] = trim($postArray['Content']);
         return $content;
     }

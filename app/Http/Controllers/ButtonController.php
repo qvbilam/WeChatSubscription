@@ -30,7 +30,7 @@ class ButtonController extends Controller
         if (!$token) {
             $token = TokenController::getToken();
         }
-        $response = Curl::to('https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN')
+        $response = Curl::to('https://api.weixin.qq.com/cgi-bin/menu/delete')
             ->withData(['access_token' => $token])
             ->get();
         return $response;
@@ -46,6 +46,11 @@ class ButtonController extends Controller
             ->withData(['access_token' => $token])
             ->get();
         return $response;
+    }
+
+    static function clickButton()
+    {
+        $content = '请您添加下小按微信：Seven_Lee_yeah,里面有专业人士为您解答问题';
     }
 
     static public function ButtonData()
@@ -72,9 +77,9 @@ class ButtonController extends Controller
                             "url":"http://www.soso.com/"
                         },
                         {    
-                            "type":"view",
+                            "type":"click",
                             "name":"联系我们",
-                            "url":"http://www.soso.com/"
+                            "key":"call_us"
                         }]
                      },
                      {

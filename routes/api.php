@@ -31,4 +31,7 @@ Route::any('getButton', 'ButtonController@getButton'); //获取button
 /*消息*/
 Route::any('responseMsg', 'MessageController@responseMsg'); //被动回复消息
 
+/*获取用户信息*/
+Route::any('getUserInfo', 'WeChatUserController@getUserInfo'); //获取单个用户信息
+Route::any('getQrCode', 'WeChatUserController@getQrCode'); //获取单个用户信息
 
