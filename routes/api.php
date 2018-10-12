@@ -41,7 +41,9 @@ Route::any('withdrawMoney', 'ViewController@withdrawMoney'); //司机提现
 Route::any('getOrder', 'ViewController@getOrder'); //获取司机订单
 Route::any('bind', 'ViewController@bind'); //司机绑定
 Route::any('macRepair', 'ViewController@macRepair'); //设备报修
+/*页面重定向*/
 Route::any('getOpenId', 'ViewController@getOpenId'); //获取openid
+Route::any('registerList', 'ViewController@registerList'); //司机注册 ---- 普通
 
 
 

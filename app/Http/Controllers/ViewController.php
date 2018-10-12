@@ -8,31 +8,41 @@ use Ixudra\Curl\Facades\Curl;
 class ViewController extends Controller
 {
     //普通司机注册
-    static public $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9e40a29d39faba87&redirect_uri=";
-    static public $parameter = "&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
 
     public function register(Request $request)
     {
-        $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/getOpenId';
+        $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/registerList';
         $scope = 'snsapi_base';
         $state = 'TEST';
-        $to_url = self::$url . urlencode($REDIRECT_URI) . '&response_type=code&scope=' . $scope . '&state=' . $state . '#wechat_redirect';
+        $to_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" . env('TEST_WECHAT_APPID') .
+            '&redirect_uri=' . urlencode($REDIRECT_URI) .
+            '&response_type=code&scope=' . $scope .
+            '&state=' . $state . '#wechat_redirect';
         header("Location:" . $to_url);
     }
 
-    public function getOpenId()
+    static public function getOpenId(Request $request)
     {
-        $APPID='wx9e40a29d39faba87';
-        $SECRET='23bdd2ef6129a278a3af4e57992105b4';
-        $state='TEST';
-        $code='';
-        if($_GET['state']==$state) {
+        $APPID = env('TEST_WECHAT_APPID');
+        $SECRET = env('TEST_WECHAT_SECRET');
+        $state = 'TEST';
+        $code = '';
+        if ($_GET['state'] == $state) {
             $code = $_GET['code'];
-            $uinfo = file_get_contents("https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $APPID . "&secret=" . $SECRET . "&code={$code}&grant_type=authorization_code");
+            $uinfo = file_get_contents("https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $APPID .
+                "&secret=" . $SECRET .
+                "&code={$code}&grant_type=authorization_code");
             $uinfo = (array)json_decode($uinfo);
             $openid = $uinfo['openid'];
-            echo "OPENID IS: " . $openid;
+            return $openid;
+        } else {
+            echo "获取用户openId失败";
         }
+    }
+
+    public function registerList()
+    {
+        echo self::getOpenId() . '卧槽他妈能那都';
     }
 
     //司机提现
