@@ -65,7 +65,7 @@ class ViewController extends Controller
             )
 //            ->paginate(15);
         ->select();
-        dd($data);
+        dd((array)$data);
         return view('test',[$data => $data]);
 
     }
