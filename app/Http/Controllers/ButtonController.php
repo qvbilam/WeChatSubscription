@@ -65,7 +65,7 @@ class ButtonController extends Controller
                         {    
                             "type":"view",
                             "name":"普通司机注册",
-                            "url":"http://www.soso.com/"
+                            "url":"http://wxgzh.qvbilam.xin/api/register"
                         },
                         {    
                             "type":"view",
@@ -84,22 +84,22 @@ class ButtonController extends Controller
                         {    
                             "type":"view",
                             "name":"司机提现",
-                            "url":"http://www.soso.com/"
+                            "url":"http://wxgzh.qvbilam.xin/api/withdrawMoney"
                         },
                         {    
                             "type":"view",
                             "name":"订单管理",
-                            "url":"http://www.soso.com/"
+                            "url":"http://wxgzh.qvbilam.xin/api/getOrder"
                         },
                         {    
                             "type":"view",
                             "name":"司机绑定",
-                            "url":"http://www.soso.com/"
+                            "url":"http://wxgzh.qvbilam.xin/api/bind"
                         },
                         {    
                             "type":"view",
                             "name":"设备报修",
-                            "url":"http://www.soso.com/"
+                            "url":"http://wxgzh.qvbilam.xin/api/macRepair"
                         }]
                      }
                      ]

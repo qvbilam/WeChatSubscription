@@ -35,3 +35,12 @@ Route::any('responseMsg', 'MessageController@responseMsg'); //被动回复消息
 Route::any('getUserInfo', 'WeChatUserController@getUserInfo'); //获取单个用户信息
 Route::any('getQrCode', 'WeChatUserController@getQrCode'); //获取单个用户信息
 
+/*页面*/
+Route::any('register', 'ViewController@register'); //司机注册 ---- 普通
+Route::any('withdrawMoney', 'ViewController@withdrawMoney'); //司机提现
+Route::any('getOrder', 'ViewController@getOrder'); //获取司机订单
+Route::any('bind', 'ViewController@bind'); //司机绑定
+Route::any('macRepair', 'ViewController@macRepair'); //设备报修
+
+
+
