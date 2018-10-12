@@ -111,13 +111,12 @@ class ViewController extends Controller
             $uinfo = (array)json_decode($uinfo);
             $openid = $uinfo['openid'];
             return $openid;
-        } else {
-            echo "获取用户openId失败";
+            //可能来自订单分页
+        } else if(isset($_GET['page'])){
+            return self::getOrderList();
         }
-        //可能来自订单分页
-        if(isset($_GET['page'])){
-           return self::getOrderList();
-        }
+
+
     }
 
     //请求微信获取用户openid. 参数重定向页面
