@@ -8,18 +8,70 @@ use Ixudra\Curl\Facades\Curl;
 class ViewController extends Controller
 {
     //普通司机注册
-
     public function register()
     {
         $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/registerList';
-        $scope = 'snsapi_base';
-        $state = 'TEST';
-        $to_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" . env('TEST_WECHAT_APPID') .
-            '&redirect_uri=' . urlencode($REDIRECT_URI) .
-            '&response_type=code&scope=' . $scope .
-            '&state=' . $state . '#wechat_redirect';
-        header("Location:" . $to_url);
+        self::requestWechat($REDIRECT_URI);
     }
+
+    public function registerList()
+    {
+        $openId = self::getOpenId();
+        echo "注册 : " . $openId;
+    }
+
+    //司机提现
+    public function withdrawMoney()
+    {
+        $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/withdrawMoneyList';
+        self::requestWechat($REDIRECT_URI);
+    }
+
+    public function withdrawMoneyList()
+    {
+        $openId = self::getOpenId();
+        echo "提现 : " . $openId;
+    }
+
+    //司机订单
+    public function getOrder()
+    {
+        $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/getOrderList';
+        self::requestWechat($REDIRECT_URI);
+    }
+
+    public function getOrderList()
+    {
+        $openId = self::getOpenId();
+        echo "订单 : " . $openId;
+    }
+
+    //司机绑定
+    public function bind()
+    {
+        $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/bindList';
+        self::requestWechat($REDIRECT_URI);
+    }
+
+    public function bindList()
+    {
+        $openId = self::getOpenId();
+        echo "绑定 : " . $openId;
+    }
+
+    //设备报修
+    public function macRepair()
+    {
+        $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/macRepairList';
+        self::requestWechat($REDIRECT_URI);
+    }
+
+    public function macRepairList()
+    {
+        $openId = self::getOpenId();
+        echo "报修 : " . $openId;
+    }
+
 
     static public function getOpenId()
     {
@@ -40,32 +92,13 @@ class ViewController extends Controller
         }
     }
 
-    public function registerList()
+    //请求微信获取用户openid. 参数重定向页面
+    static public function requestWechat($REDIRECT_URI,$scope='snsapi_base',$state='TEST')
     {
-        echo self::getOpenId() . '卧槽他妈能那都';
-    }
-
-    //司机提现
-    public function withdrawMoney()
-    {
-        return view('welcome');
-    }
-
-    //司机订单
-    public function getOrder()
-    {
-        return view('welcome');
-    }
-
-    //司机绑定
-    public function bind()
-    {
-        return view('welcome');
-    }
-
-    //设备报修
-    public function macRepair()
-    {
-        return view('welcome');
+        $to_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" . env('TEST_WECHAT_APPID') .
+            '&redirect_uri=' . urlencode($REDIRECT_URI) .
+            '&response_type=code&scope=' . $scope .
+            '&state=' . $state . '#wechat_redirect';
+        header("Location:" . $to_url);
     }
 }
