@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
+use App\Model\Driver;
 
 class ViewController extends Controller
 {
@@ -17,6 +18,10 @@ class ViewController extends Controller
     public function registerList()
     {
         $openId = self::getOpenId();
+        $res = self::judgeUser($openId);
+        if(!$res){
+            return view('error');
+        }
         echo "注册 : " . $openId;
     }
 
@@ -100,5 +105,15 @@ class ViewController extends Controller
             '&response_type=code&scope=' . $scope .
             '&state=' . $state . '#wechat_redirect';
         header("Location:" . $to_url);
+    }
+
+    //判断用户是否绑定
+    static public function judgeUser($openId)
+    {
+        $res = Driver::where(['openId'=>$openId,'type'=>0])->first();
+        if(!$res){
+            return true;
+        }
+        return false;
     }
 }
