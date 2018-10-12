@@ -65,7 +65,7 @@ class ViewController extends Controller
             )
 //            ->paginate(15);
         ->get()->toArray();
-        return view('test',[$data => $data]);
+        return view('test',['data' => $data]);
 
     }
 
