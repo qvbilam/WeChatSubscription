@@ -64,7 +64,7 @@ class ViewController extends Controller
                 'passenger_coupons.refund as refund'
             )
 //            ->paginate(15);
-        ->get();
+        ->get()->toArray();
         dd($data);
         return view('test',[$data => $data]);
 
