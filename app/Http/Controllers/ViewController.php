@@ -46,7 +46,7 @@ class ViewController extends Controller
         self::requestWechat($REDIRECT_URI);
     }
 
-    public function getOrderList()
+    static public function getOrderList()
     {
         $openId = self::getOpenId();
         $driverId = self::judgeUser($openId);
@@ -103,7 +103,7 @@ class ViewController extends Controller
         $SECRET = env('TEST_WECHAT_SECRET');
         $state = 'TEST';
         $code = '';
-        if ($_GET['state'] == $state) {
+        if ($_GET['state'] && $_GET['state'] == $state) {
             $code = $_GET['code'];
             $uinfo = file_get_contents("https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $APPID .
                 "&secret=" . $SECRET .
@@ -113,6 +113,10 @@ class ViewController extends Controller
             return $openid;
         } else {
             echo "获取用户openId失败";
+        }
+        //可能来自订单分页
+        if($_GET['page']){
+           return self::getOrderList(); 
         }
     }
 
