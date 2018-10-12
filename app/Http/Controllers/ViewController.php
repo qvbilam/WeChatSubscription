@@ -55,7 +55,7 @@ class ViewController extends Controller
         }
         $data = Coupon::leftJoin('passenger_wxpay_orderlist','passenger_wxpay_orderlist.out_trade_no','=','passenger_coupons.out_trade_no')
             ->leftJoin('passenger_combos','passenger_combos.id','=','passenger_coupons.combo_id')
-            ->where(['id'=>$driverId])
+            ->where(['passenger_coupons.driverId'=>$driverId])
             ->select(
                 'passenger_coupons.id as couponId',
                 'passenger_coupons.created_at as created_at',
