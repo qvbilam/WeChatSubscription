@@ -10,13 +10,13 @@
                     @if($val['refund'] == 1)
                         完成
                     @else
-                        退款
+                        用户退款
                     @endif
                 </div>
-
             </td>
         </tr>
     @endforeach
+        {{ $users->links() }}
 </table>
 </body>
 </html>

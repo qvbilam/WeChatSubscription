@@ -63,8 +63,9 @@ class ViewController extends Controller
                 'passenger_wxpay_orderlist.cash_fee as fee',
                 'passenger_coupons.refund as refund'
             )
-//            ->paginate(15);
-        ->get()->toArray();
+            ->paginate(15);
+//        ->get()->toArray();
+
         return view('test',['data' => $data]);
 
     }
