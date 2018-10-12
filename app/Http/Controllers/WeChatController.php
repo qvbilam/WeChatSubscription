@@ -31,18 +31,18 @@ class WeChatController extends Controller
             $postArray = json_decode(json_encode(simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
             $MsgT = $postArray['MsgType'];
             Log::info('wxmsg : ' . json_encode($postArray));
-//            echo MessageController::responseMsg($postArray);
-//            exit;
+            echo MessageController::responseMsg($postArray);
+            exit;
             //如果用户发送的为文本消息
-            if ($MsgT == "text") {
-                echo MessageController::responseMsg($postArray);
-                exit;
-            }
-            //关注事件
-            if ($MsgT == "event") {
-                //取关用户也收不到公众号信息所以不做判断
-
-            }
+//            if ($MsgT == "text") {
+//                echo MessageController::responseMsg($postArray);
+//                exit;
+//            }
+//            //关注事件
+//            if ($MsgT == "event") {
+//                //取关用户也收不到公众号信息所以不做判断
+//
+//            }
         }
 
 
