@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
 use App\Model\Driver;
+use App\Model\Coupon;
 
 class ViewController extends Controller
 {
@@ -48,7 +49,23 @@ class ViewController extends Controller
     public function getOrderList()
     {
         $openId = self::getOpenId();
-        echo "订单 : " . $openId;
+        $driverId = self::judgeUser($openId);
+        if(!$driverId){
+            return view('error');
+        }
+        $data = Coupon::leftJoin('passenger_wxpay_orderlist','passenger_wxpay_orderlist.out_trade_no','=','passenger_coupons.out_trade_no')
+            ->leftJoin('passenger_combos','passenger_combos.id','=','passenger_coupons.combo_id')
+            ->where(['id'=>$driverId])
+            ->select(
+                'passenger_coupons.id as couponId',
+                'passenger_coupons.created_at as created_at',
+                'passenger_combos.minute as minute',
+                'passenger_wxpay_orderlist.cash_fee as fee',
+                'passenger_coupons.refund as refund'
+            )
+            ->paginate(15);
+        return view('test',[$data => $data]);
+
     }
 
     //司机绑定
@@ -110,9 +127,9 @@ class ViewController extends Controller
     //判断用户是否绑定
     static public function judgeUser($openId)
     {
-        $res = Driver::where(['openId'=>$openId,'type'=>0])->first();
+        $res = Driver::where(['openId'=>$openId,'type'=>0])->value('id');
         if($res){
-            return true;
+            return $res;
         }
         return false;
     }
