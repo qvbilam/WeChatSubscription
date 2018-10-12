@@ -9,7 +9,7 @@ class ViewController extends Controller
 {
     //普通司机注册
 
-    public function register(Request $request)
+    public function register()
     {
         $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/registerList';
         $scope = 'snsapi_base';
@@ -21,7 +21,7 @@ class ViewController extends Controller
         header("Location:" . $to_url);
     }
 
-    static public function getOpenId(Request $request)
+    static public function getOpenId()
     {
         $APPID = env('TEST_WECHAT_APPID');
         $SECRET = env('TEST_WECHAT_SECRET');
