@@ -16,7 +16,7 @@
             </td>
         </tr>
     @endforeach
-        {{ $users->links() }}
+        {{ $data->links() }}
 </table>
 </body>
 </html>
