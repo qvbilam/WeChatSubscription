@@ -111,7 +111,7 @@ class ViewController extends Controller
     static public function judgeUser($openId)
     {
         $res = Driver::where(['openId'=>$openId,'type'=>0])->first();
-        if(!$res){
+        if($res){
             return true;
         }
         return false;
