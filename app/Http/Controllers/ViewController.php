@@ -55,22 +55,22 @@ class ViewController extends Controller
         }
 
         //统计总页数
-        $data = Coupon::leftJoin('passenger_wxpay_orderlist','passenger_wxpay_orderlist.out_trade_no','=','passenger_coupons.out_trade_no')
-            ->leftJoin('passenger_combos','passenger_combos.id','=','passenger_coupons.combo_id')
-            ->where(['passenger_coupons.driverId'=>$driverId])
-            ->orderBy('passenger_coupons.id','desc')
-            ->select(
-                'passenger_coupons.id as couponId',
-                'passenger_coupons.created_at as created_at',
-                'passenger_combos.minute as minute',
-                'passenger_wxpay_orderlist.cash_fee as fee',
-                'passenger_coupons.refund as refund'
-            )
-            ->limit(0,15)
-            ->get();
+//        $data = Coupon::leftJoin('passenger_wxpay_orderlist','passenger_wxpay_orderlist.out_trade_no','=','passenger_coupons.out_trade_no')
+//            ->leftJoin('passenger_combos','passenger_combos.id','=','passenger_coupons.combo_id')
+//            ->where(['passenger_coupons.driverId'=>$driverId])
+//            ->orderBy('passenger_coupons.id','desc')
+//            ->select(
+//                'passenger_coupons.id as couponId',
+//                'passenger_coupons.created_at as created_at',
+//                'passenger_combos.minute as minute',
+//                'passenger_wxpay_orderlist.cash_fee as fee',
+//                'passenger_coupons.refund as refund'
+//            )
+//            ->limit(0,15)
+//            ->get();
 //            ->paginate(15);
 //        ->get()->toArray();
-
+        $data = self::addOrderData($driverId);
         return view('order',['data' => $data,'driverId'=>$driverId]);
 
     }
@@ -78,8 +78,8 @@ class ViewController extends Controller
     static public function addOrderData(Request $request)
     {
 
-        $driverId = $request->input('driverId',0);
-        $page = $request->input('page',2);
+        $driverId = $request->input('driverId',$request);
+        $page = $request->input('page',1);
         $offset = 5;
         return self::OrderData($driverId,$page,$offset);
     }
