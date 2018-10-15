@@ -49,6 +49,7 @@ Route::any('registerList', 'ViewController@registerList');                  //�
 Route::any('withdrawMoneyList', 'ViewController@withdrawMoneyList');        //司机提现
 Route::any('getOrderList', 'ViewController@getOrderList');                  //获取司机订单
 Route::any('addOrderData', 'ViewController@addOrderData');                  //增加司机订单
+Route::any('OrderData', 'ViewController@OrderData');                  //订单数据
 Route::any('bindList', 'ViewController@bindList');                          //司机绑定
 Route::any('macRepairList', 'macRepairList@bindList');                      //设备报修
 

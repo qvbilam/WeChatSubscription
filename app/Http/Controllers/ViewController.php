@@ -22,7 +22,7 @@ class ViewController extends Controller
     {
         $openId = self::getOpenId();
         $res = self::judgeUser($openId);
-        if(!$res){
+        if (!$res) {
             return view('error');
         }
         echo "注册 : " . $openId;
@@ -52,7 +52,7 @@ class ViewController extends Controller
     {
         $openId = self::getOpenId();
         $driverId = self::judgeUser($openId);
-        if(!$driverId){
+        if (!$driverId) {
             return view('error');
         }
 
@@ -72,27 +72,31 @@ class ViewController extends Controller
 //            ->get();
 //            ->paginate(15);
 //        ->get()->toArray();
-        $data = json_decode(self::OrderData($driverId,1,self::$offset));
-        return view('order',['data' => $data['data'],'driverId'=>$driverId]);
+        $data = json_decode(self::OrderData($driverId, 1, self::$offset));
+        if(!$data['data']){
+            return view('order');
+        }
+        return view('order', ['data' => $data['data'], 'driverId' => $driverId]);
 
     }
 
     static public function addOrderData(Request $request)
     {
 
-        $driverId = $request->input('driverId',0);
-        $page = $request->input('page',1);
+        $driverId = $request->input('driverId', 0);
+        $page = $request->input('page', 1);
         $offset = self::$offset;
-        return self::OrderData($driverId,$page,$offset);
+        return self::OrderData($driverId, $page, $offset);
     }
 
-    static public function OrderData($driverId,$page,$offset)
+    static public function OrderData($driverId, $page = 1, $offset = 5)
     {
-        $data = Coupon::leftJoin('passenger_wxpay_orderlist','passenger_wxpay_orderlist.out_trade_no','=','passenger_coupons.out_trade_no')
-            ->leftJoin('passenger_combos','passenger_combos.id','=','passenger_coupons.combo_id')
-            ->where(['passenger_coupons.driverId'=>$driverId])
+        $page = $page - 1;
+        $data = Coupon::leftJoin('passenger_wxpay_orderlist', 'passenger_wxpay_orderlist.out_trade_no', '=', 'passenger_coupons.out_trade_no')
+            ->leftJoin('passenger_combos', 'passenger_combos.id', '=', 'passenger_coupons.combo_id')
+            ->where(['passenger_coupons.driverId' => $driverId])
             ->whereNotNull('passenger_wxpay_orderlist.cash_fee')
-            ->orderBy('passenger_coupons.id','desc')
+            ->orderBy('passenger_coupons.id', 'desc')
             ->select(
                 'passenger_coupons.id as couponId',
                 'passenger_coupons.created_at as created_at',
@@ -100,10 +104,10 @@ class ViewController extends Controller
                 'passenger_wxpay_orderlist.cash_fee as fee',
                 'passenger_coupons.refund as refund'
             )
-            ->offset(($page-1)*$offset)
+            ->offset($page * $offset)
             ->limit($offset)
             ->get();
-        return self::success(0,'ok',$data);
+        return self::success(0, 'ok', $data);
 
     }
 
@@ -149,7 +153,7 @@ class ViewController extends Controller
             $openid = $uinfo['openid'];
             return $openid;
             //可能来自订单分页
-        } else if(isset($_GET['page'])){
+        } else if (isset($_GET['page'])) {
             return self::addOrderData($_GET['page']);
         }
 
@@ -157,7 +161,7 @@ class ViewController extends Controller
     }
 
     //请求微信获取用户openid. 参数重定向页面
-    static public function requestWechat($REDIRECT_URI,$scope='snsapi_base',$state='TEST')
+    static public function requestWechat($REDIRECT_URI, $scope = 'snsapi_base', $state = 'TEST')
     {
         $to_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" . env('TEST_WECHAT_APPID') .
             '&redirect_uri=' . urlencode($REDIRECT_URI) .
@@ -169,8 +173,8 @@ class ViewController extends Controller
     //判断用户是否绑定
     static public function judgeUser($openId)
     {
-        $res = Driver::where(['openId'=>$openId,'type'=>0])->value('id');
-        if($res){
+        $res = Driver::where(['openId' => $openId, 'type' => 0])->value('id');
+        if ($res) {
             return $res;
         }
         return false;
