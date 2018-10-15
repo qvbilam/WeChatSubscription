@@ -102,7 +102,7 @@ class ViewController extends Controller
             )
             ->offset(($page-1)*$offset)
             ->limit($offset)
-            ->get();
+            ->get()->toArray();
         return self::success(0,'ok',$data);
 
     }
