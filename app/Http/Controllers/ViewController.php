@@ -72,7 +72,7 @@ class ViewController extends Controller
 //            ->get();
 //            ->paginate(15);
 //        ->get()->toArray();
-        $data = self::OrderData($driverId,1,self::$offset);
+        $data = json_decode(self::OrderData($driverId,1,self::$offset));
         return view('order',['data' => $data['data'],'driverId'=>$driverId]);
 
     }
