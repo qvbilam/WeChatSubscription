@@ -73,7 +73,7 @@ class ViewController extends Controller
 //            ->paginate(15);
 //        ->get()->toArray();
         $data = self::OrderData($driverId,1,self::$offset);
-        return view('order',['data' => $data,'driverId'=>$driverId]);
+        return view('order',['data' => $data['data'],'driverId'=>$driverId]);
 
     }
 
@@ -103,7 +103,7 @@ class ViewController extends Controller
             ->offset(($page-1)*$offset)
             ->limit($offset)
             ->get();
-        return $data;
+        return self::success(0,'ok',$data);
 
     }
 
