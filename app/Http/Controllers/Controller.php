@@ -10,4 +10,14 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    static protected function success($errorCode = 0, $errorMessage = 'ok', $successData = [])
+    {
+        return response()->json(['error_code' => $errorCode, 'msg' => $errorMessage, 'data' => $successData]);
+    }
+
+    static protected function error($errorCode, $errorMessage)
+    {
+        return response()->json(['error_code' => $errorCode, 'msg' => $errorMessage]);
+    }
 }

@@ -61,5 +61,15 @@ class WeChatController extends Controller
         return $response;
     }
 
+    public function test()
+    {
+        return view('ceshi',['driverId'=>1]);
+    }
+
+    public function testajax(Request $request)
+    {
+        return $this->success(0,'ok',['a'=>$request->input('page'),'b'=>456]);
+    }
+
 
 }

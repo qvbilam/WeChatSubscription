@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::any('valid', 'TokenController@valid');                               //验证服务器token
 Route::any('getToken', 'TokenController@getToken');                         //获取token验证
 Route::any('index', 'WeChatController@index');                              //首页
+Route::any('test', 'WeChatController@test');                                //测试
+Route::any('testajax', 'WeChatController@testajax');                        //测试
 
 
 /*  button按钮  */
@@ -46,6 +48,7 @@ Route::any('getOpenId', 'ViewController@getOpenId');                        //�
 Route::any('registerList', 'ViewController@registerList');                  //司机注册 ---- 普通
 Route::any('withdrawMoneyList', 'ViewController@withdrawMoneyList');        //司机提现
 Route::any('getOrderList', 'ViewController@getOrderList');                  //获取司机订单
+Route::any('addOrderData', 'ViewController@addOrderData');                  //增加司机订单
 Route::any('bindList', 'ViewController@bindList');                          //司机绑定
 Route::any('macRepairList', 'macRepairList@bindList');                      //设备报修
 
