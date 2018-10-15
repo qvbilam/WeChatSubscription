@@ -10,6 +10,8 @@ use App\Model\Coupon;
 class ViewController extends Controller
 {
     //普通司机注册
+    static public $offset = 5;
+
     public function register()
     {
         $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/registerList';
@@ -70,7 +72,7 @@ class ViewController extends Controller
 //            ->get();
 //            ->paginate(15);
 //        ->get()->toArray();
-        $data = self::addOrderData(['driverId'=>$driverId]);
+        $data = self::OrderData($driverId,1,self::$offset);
         return view('order',['data' => $data,'driverId'=>$driverId]);
 
     }
@@ -80,7 +82,7 @@ class ViewController extends Controller
 
         $driverId = $request->input('driverId',0);
         $page = $request->input('page',1);
-        $offset = 5;
+        $offset = self::$offset;
         return self::OrderData($driverId,$page,$offset);
     }
 
@@ -99,7 +101,7 @@ class ViewController extends Controller
                 'passenger_coupons.refund as refund'
             )
             ->offset(($page-1)*$offset)
-            ->limit(5)
+            ->limit($offset)
             ->get();
         return self::success(0,'ok',$data);
 
