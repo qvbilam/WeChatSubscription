@@ -1,0 +1,96 @@
+@charset "utf-8";
+/* CSS Document */
+#logo{cursor:pointer;}
+.header{ width:91.1%;background-color: #e7e9e7; height: 80px; padding: 0 4.45%; position:fixed; top:0; z-index: 99999;}
+.header:after{clear:both;content:'';display:block;width:0;height:0;visibility:hidden;}
+.logo{width:197px; margin-top: 20px;}
+.nav{font-size: 1vw; color:#434343;}
+.nav li{ margin-left: 90px; display: inline-block;}
+.nav li a{ height: 76px;line-height: 76px;  display: inline-block; color:#434343;}
+.nav li a:hover{height: 70px;line-height: 64px;  border-top: #9c84bd 6px solid; color:#9c84bd;}
+.nav .liErwei{ position: relative;}
+.nav .erweima{position: absolute; left:-10px; top:80px; display: none;}
+.nav .erweima img{width:150%;}
+.pic1{width:100%;background-color: #e7e9e7; padding-top: 80px; position: relative;}
+.pic1 .mask{ width:100%;height:100%; margin-top:-80px;background-color: #000; position: absolute;opacity: 0; z-index: 99998}
+.pic1:after{clear:both;content:'';display:block;width:0;height:0;visibility:hidden;}
+.pic1 .amoment{ width:50%; margin-left: 10%; margin-top:23%; position:relative;}
+.amomentTxt{ width:35%; position: absolute; opacity: 0; }
+.amomentTxt2{ width:20%; position: absolute; opacity: 0;left:60%; margin-top:8%; }
+.pic1 .rightImg{ width:40%;}
+.pic360{ position:relative;}
+.pic360 .txt{ width:14%;color:#fff;}
+.pic360 .txt span{ font-size: 5.67vw;position: absolute; top:13%; right:13%;}
+.pic360 .txt .circle{ width:1.8%; position: absolute; top:9%;right:10%;}
+.pic2 img{width:100%; }
+.txt1{ width: 82%; margin:9% 9%;}
+.txt1:after{clear:both;content:'';display:block;width:0;height:0;visibility:hidden;}
+.txt1 p{     width: 56%;  font-size: 1vw;  color: #434343;  line-height: 2.5vw;  margin-top: 8%;}
+.txt1 .txtBG1{ width:20%;}
+.joinUs{background-color: white; }
+.joinUs:after{clear:both;content:'';display:block;width:0;height:0;visibility:hidden;}
+.joinUs .joinBG{ width:40%;}
+.joinUs .left{width:40%;padding-left: 10%; padding-top: 15%;}
+.joinUs .team{ position: relative;}
+.joinUs .team .joinPortal{ width:18%; position: absolute; left:11%; cursor:pointer;}
+.joinUs .team .joinTeam{width:23%;padding-top:5%}
+.joinUs .brand{width:100%; margin-top: 12.5%}
+.joinUs .brand li{ display: inline-block; width:8.5%; margin-right: 7%;}
+.joinUs .brand li img{ width:100%;}
+.cityBG{ width:100%; margin-top: 9.5%}
+.footer{ padding:4.55% 18%; width:64%; background-color: #9e7eb9; margin-top: -10px; color:white;}
+.footer ul{ border-bottom: #aa87c7 1px solid;font-size: 0.8vw; padding:2.1% 0;}
+.footer .noBorder{ border:none; padding-top: 4.1%; font-size: 0.74vw;}
+.footer ul li{ width:30%; display: inline-block;}
+.footerIcon {width: 30.5%;}
+.download{width: 30.5%;}
+.erweimaFooter{ position: relative;}
+.erweimaFooter span{ display: inline-block; width:30%;}
+.erweimaPic{ position: absolute; margin-top: -13%; left:30%; display: none;}
+.erweimaPic img{ width:40%;}
+.footer ul li .pointer{ cursor: pointer; color:#fff;}
+.weibo{width: 28%}
+.weixinErwei{ width:28%;position:absolute;margin-top: -10%; left:50%;display: none;}
+
+
+/*invitation--司机邀请--*/
+.invitation{background-color: #f9f8f6;}
+.invHeader{ width:100%; height:40px; padding-top: 20px; text-align: center; border-bottom: 1px solid #bfbfbf;}
+.invHeader img{ width:80px;}
+
+
+/*down app--下载app--*/
+.downApp{background-color: #fff;}
+.appHeader{ width:100%; height:40px; padding-top: 20px; text-align: center; border-bottom: 1px solid #bfbfbf;}
+.appHeader img{ width:80px; margin: 0 auto;}
+.appCon{width:20%; position: fixed;left:40%; top:20%; margin:0 auto; font-size: 1vw;}
+.appCon dl .appErwei{ width:50%; margin: 0 25%; display: inline-block;}
+.appCon dl dd .p1{ text-align: center;color:#848484; margin-top: 5%;}
+.appCon dl dd .p2{ text-align: center; font-size: 1.1em; color:#656565; margin-top: 20%;}
+.appCon dl dd ul{text-align: center;}
+.appCon dl dd ul li{ width:36%; margin-top: 5%; display: inline-block; cursor:pointer;}
+.appCon dl dd ul li img{ width:100%;}
+
+
+
+
+
+
+
+
+/*响应式*/
+@media screen and (max-width:640px) {
+    /* 屏幕宽度小于600px CSS 代码 */
+    .logo{width:100px;margin-top: 23px;}
+    .nav{font-size: 14px;}
+    .nav li{ margin-left: 35px;}
+    .txt1{ margin-top: 50px;margin-bottom: 50px;}
+    /*.txt1 p{ line-height: 24px;}*/
+    .txtBG1{ width:50%;}
+}
+@media screen and (min-width:640px) and (max-width:1000px) {
+    /* CSS 代码 */
+    .txt1{ margin-top: 50px;margin-bottom: 50px;}
+    /*.txt1 p{ line-height: 24px;}*/
+    .txtBG1{ width:50%;}
+}

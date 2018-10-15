@@ -1,0 +1,72 @@
+*{ border: none; padding: 0; margin: 0; font-family: "微软雅黑";}
+#logo{cursor:pointer;}
+li {list-style: none;}
+.fl{float:left;}
+.fr{float:right;}
+body{ background: url("../img/invitationBG.jpg")}
+.invitation{width:100%;}
+/*.invitation .bg{ width:100%;left:0; top:0;position: absolute;}*/
+.invitation .header{width:100%; padding-top: 20px; height:40px; text-align: center; border-bottom: #c5c4c4 1px solid;}
+.invitation .header .logo{ width:85px; display: inline-block;}
+
+.inviCon { width:100%;}
+.inviForm{ width:320px; margin: 100px auto;  padding: 30px 45px;background: rgba(255,255,255,0.65); border-radius: 10px;}
+.inviForm h2{ margin-bottom:30px;font-size: 24px; color:#7d7d7d; font-weight: normal;}
+.inviForm ul{ width:100%;font-size: 14px; color:#6b6b6b;line-height:40px; }
+.inviForm ul li{ height:40px;padding: 10px;margin-bottom:15px;  border-bottom: #b4b3b2 1px solid;}
+.inviForm .inputTxt{border:none;height:40px; width:100%;}
+.inviForm .input200{ width:200px;}
+.inviForm .input260{ width:260px;}
+.getCode{ cursor:pointer;}
+.inviForm .inputSubmit{ margin-top: 40px;}
+.inviForm .inputSubmit img{width:100%;}
+.gtIcon{cursor: pointer;}
+.gtIconDown{ display: inline-block;
+    /*background: goldenrod;*/
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg); /* Internet Explorer */
+    -moz-transform:rotate(90deg); /* Firefox */
+    -webkit-transform:rotate(90deg); /* Safari 和 Chrome */
+    -o-transform:rotate(90deg); /* Opera */}
+#allPlace{
+    min-width: 300px;
+    position: relative;
+    border: 1px solid #d2d2d2;
+    box-shadow: 0 2px 4px rgba(0,0,0,.12);
+    background-color: #fff;
+    color: #666;
+    margin-top: 15px;
+    border-radius: 2px;
+    max-height: 200px;
+    overflow: auto;
+    display: none;
+}
+#allPlace dd{ cursor: pointer;
+    padding: 5px; padding-left: 15px;}
+#allPlace dd:hover{ background-color: #a081c1; color:#fff;}
+.errorBorder{ border:red 1px solid;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
