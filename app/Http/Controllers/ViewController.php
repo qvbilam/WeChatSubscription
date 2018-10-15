@@ -70,7 +70,7 @@ class ViewController extends Controller
 //            ->get();
 //            ->paginate(15);
 //        ->get()->toArray();
-        $data = self::addOrderData($driverId);
+        $data = self::addOrderData(['driverId'=>$driverId]);
         return view('order',['data' => $data,'driverId'=>$driverId]);
 
     }
@@ -78,7 +78,7 @@ class ViewController extends Controller
     static public function addOrderData(Request $request)
     {
 
-        $driverId = $request->input('driverId',$request);
+        $driverId = $request->input('driverId',0);
         $page = $request->input('page',1);
         $offset = 5;
         return self::OrderData($driverId,$page,$offset);
