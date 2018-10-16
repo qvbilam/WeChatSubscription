@@ -141,7 +141,6 @@
 <script src="https://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
 <script>
     var Agreement = window.location.protocol
-    alert(Agreement)
     var page = 2;
     var driverId = {{ $driverId }}
     $('#getDataBut').click(function () {
