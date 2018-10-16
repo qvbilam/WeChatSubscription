@@ -58,4 +58,35 @@ class WeChatUserController extends Controller
         DB::commit();
         return $this->success(0, '注册成功');
     }
+
+    //用户绑定
+    public function bindExecute(Request $request)
+    {
+        $phone = $request->input('phone');
+        $openId = $request->input('openId');
+        if(!$phone){
+            return $this->error(4001,'请填写手机号');
+        }
+        $driverId = Driver::where(['phone'=>$phone,'type'=>0])->value('id');
+        if(!$driverId){
+            return $this->error(4002,'请去注册');
+        }
+        $res = Driver::where(['id'=>$driverId])->update(['openId'=>$openId]);
+        if(!$res){
+            return $this->error(4003,'绑定失败');
+        }
+        return $this->success(0,'绑定成功',['url'=>view('bind_success')]);
+    }
+
+    //用户报修设备
+    public function repairExecute(Request $request)
+    {
+
+    }
+
+    //用户提现
+    public function withdrawMoneyExecute(Request $request)
+    {
+
+    }
 }

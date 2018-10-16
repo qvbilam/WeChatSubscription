@@ -124,7 +124,11 @@ class ViewController extends Controller
     public function bindList()
     {
         $openId = self::getOpenId();
-        echo "绑定 : " . $openId;
+        $driverId = self::judgeUser($openId);
+        if (!$driverId) {
+            return view('error');
+        }
+        return view('bind');
     }
 
     //设备报修
