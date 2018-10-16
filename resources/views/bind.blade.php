@@ -13,14 +13,14 @@
     var Agreement = window.location.protocol
     var phone = $('#phone').val()
     var openId = $('#openId').val()
-    $('#phone').click(function () {
+    $('#bind').click(function () {
         $.ajax({
             type: 'POST',
             url: Agreement + '/api/bindExecute',
             data: {'phone': phone, 'openId': openId},
             dataType: 'json',
             success: function (data) {
-                console.log(data.data.length)
+                console.log(data)
             }
         })
     })
