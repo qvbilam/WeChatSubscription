@@ -117,12 +117,12 @@
             <tr>
                 <td>
                     <div>{{ $val['created_at'] }}</div>
-                    <div style="width: 50%; float: left;">{{ $val['minute'] }}}({{ $val['fee'] }}})</div>
+                    <div style="width: 50%; float: left;">{{ $val['minute'] }}({{ $val['fee'] }})</div>
                     <div style="width: 50%; float: right;">
                         @if($val['refund'] == 0)
-                            {{ $val['refund'] }}}完成
+                            完成
                         @else
-                            {{ $val['refund'] }}}用户退款
+                           用户退款
                         @endif
                     </div>
                 </td>
