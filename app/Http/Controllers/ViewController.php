@@ -74,7 +74,7 @@ class ViewController extends Controller
 //        ->get()->toArray();
         $data = json_decode(self::OrderData($driverId, 1, self::$offset));
         if(!$data['data']){
-            return view('order');
+            return '没有订单';
         }
         return view('order', ['data' => $data['data'], 'driverId' => $driverId]);
 
