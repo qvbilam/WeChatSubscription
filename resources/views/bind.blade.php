@@ -10,6 +10,7 @@
 
 <script src="https://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
 <script>
+    var Agreement = window.location.protocol
     var phone = $('#phone').val()
     var openId = $('#openId').val()
     $('#phone').click(function () {
