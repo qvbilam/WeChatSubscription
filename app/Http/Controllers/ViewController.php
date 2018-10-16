@@ -128,7 +128,7 @@ class ViewController extends Controller
         if (!$driverId) {
             return view('error');
         }
-        return view('bind');
+        return view('bind',['openId'=>$openId]);
     }
 
     //设备报修
