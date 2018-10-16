@@ -16,7 +16,7 @@
         <img id="logo" class="logo" src="{{ URL::asset('index/img/amoLogo.png') }}">
     </div>
     <div class="inviCon">
-        <input type="text" style="display: none" id="openId" value="{{ openId }}" >
+        <input type="text" style="display: none" id="openId" value="{{ $openId }}" >
         <div class="inviForm">
             <h2>司机注册</h2>
             <ul class="formUl">
