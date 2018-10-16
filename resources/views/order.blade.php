@@ -117,7 +117,7 @@
             <tr>
                 <td>
                     <div>{{ $val['created_at'] }}</div>
-                    <div style="width: 50%; float: left;">{{ $val['minute'] }}({{ $val['fee'] }})</div>
+                    <div style="width: 50%; float: left;">{{ $val['minute'] }}分钟({{ $val['fee'] / 100 }})元</div>
                     <div style="width: 50%; float: right;">
                         @if($val['refund'] == 0)
                             完成
@@ -158,10 +158,10 @@
                     for (i = 0; i < data.data.length; i++) {
                         if (data.data[i].refund < 1) {
                             $('.content').append('<tr><td><div>' + data.data[i].created_at + '</div><div style="width: 50%; float: left;">'
-                                + data.data[i].minute + '分(' + data.data[i].fee / 100 + '元)' + '</div><div style="width: 50%; float: right;">成功</div></td></tr>')
+                                + data.data[i].minute + '分钟(' + data.data[i].fee / 100 + '元)' + '</div><div style="width: 50%; float: right;">成功</div></td></tr>')
                         } else {
                             $('.content').append('<tr><td><div>' + data.data[i].created_at + '</div><div style="width: 50%; float: left;">'
-                                + data.data[i].minute + '分(' + data.data[i].fee / 100 + '元)' + '</div><div style="width: 50%; float: right;">退款</div></td></tr>')
+                                + data.data[i].minute + '分钟(' + data.data[i].fee / 100 + '元)' + '</div><div style="width: 50%; float: right;">退款</div></td></tr>')
                         }
                     }
                 } else {
