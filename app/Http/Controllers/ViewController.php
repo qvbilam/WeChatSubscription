@@ -72,7 +72,7 @@ class ViewController extends Controller
 //            ->get();
 //            ->paginate(15);
 //        ->get()->toArray();
-        $data = json_decode(self::OrderData($driverId, 1, self::$offset));
+        $data =json_decode(self::OrderData($driverId, 1, self::$offset),true);
         if(!$data['data']){
             return '没有订单';
         }
@@ -107,7 +107,8 @@ class ViewController extends Controller
             ->offset($page * $offset)
             ->limit($offset)
             ->get();
-        return self::success(0, 'ok', $data);
+        //return self::success(0, 'ok', ['data'=>$data]);
+	return json_encode(['data'=>$data]);
 
     }
 
