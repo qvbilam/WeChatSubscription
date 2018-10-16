@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Plugins\Aliyunsms\SignatureHelper;
 use App\Model\CheckCode;
+use Illuminate\Support\Facades\Log;
 
 class CheckCodeController extends Controller
 {
