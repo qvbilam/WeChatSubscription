@@ -16,9 +16,9 @@
         <img id="logo" class="logo" src="{{ URL::asset('index/img/amoLogo.png') }}">
     </div>
     <div class="inviCon">
+        <input type="text" style="display: none" id="openId" value="{{ openId }}" >
         <div class="inviForm">
             <h2>司机注册</h2>
-
             <ul class="formUl">
                 <li>
                     <input id="phoneNum" type="tel" class="inputTxt" placeholder="请输入手机号">
@@ -51,12 +51,11 @@
                 <img src="{{ URL::asset('index/img/invitationBtn.png') }}">
             </div>
         </div>
-    </div>
+    </>
 
 </div>
 <script>
-    var oepnId =
-            {{ $openId }}
+    var oepnId =$('#openId').val()
     var Agreement = window.location.protocol
     lay('#version').html('-v' + laydate.v);
 
