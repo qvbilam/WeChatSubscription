@@ -16,7 +16,7 @@
     $('#phone').click(function () {
         $.ajax({
             type: 'POST',
-            url: Agreement + '/api/addOrderData',
+            url: Agreement + '/api/bindExecute',
             data: {'phone': phone, 'openId': openId},
             dataType: 'json',
             success: function (data) {
