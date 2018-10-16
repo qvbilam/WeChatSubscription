@@ -137,7 +137,11 @@ class ViewController extends Controller
     public function macRepairList()
     {
         $openId = self::getOpenId();
-        echo "报修 : " . $openId;
+        $driverId = self::judgeUser($openId);
+        if (!$driverId) {
+            return view('error');
+        }
+
     }
 
 
