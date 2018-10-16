@@ -14,18 +14,20 @@ class ViewController extends Controller
 
     public function register()
     {
-        $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/registerList';
-        self::requestWechat($REDIRECT_URI);
+        return view('register');
+//        $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/registerList';
+//        self::requestWechat($REDIRECT_URI);
+//        header("Location:" . $REDIRECT_URI);
     }
 
     public function registerList()
     {
-        $openId = self::getOpenId();
-        $res = self::judgeUser($openId);
-        if (!$res) {
-            return view('error');
-        }
-        return view('register',['openId'=>$openId]);
+//        $openId = self::getOpenId();
+//        $res = self::judgeUser($openId);
+//        if (!$res) {
+//            return view('error');
+//        }
+//        return view('register');
     }
 
     //司机提现
