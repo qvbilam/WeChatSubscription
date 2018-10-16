@@ -63,7 +63,7 @@ class WeChatController extends Controller
 
     public function test()
     {
-        return view('ceshi',['driverId'=>1]);
+        return view('ceshi',['openId'=>12312]);
     }
 
     public function testajax(Request $request)

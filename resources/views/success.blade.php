@@ -51,7 +51,7 @@
 <body>
 <div class="pic">
     <img src="https://amo-qrcode.oss-cn-beijing.aliyuncs.com/amo-qrcode/success.png" alt="" />
-    <span class="msg">绑定成功</span>
+    <span class="msg">成功</span>
 </div>
 </body>
 </html>

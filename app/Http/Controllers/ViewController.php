@@ -25,7 +25,7 @@ class ViewController extends Controller
         if (!$res) {
             return view('error');
         }
-        return view('register');
+        return view('register',['openId'=>$openId]);
     }
 
     //司机提现

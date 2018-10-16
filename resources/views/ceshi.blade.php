@@ -1,176 +1,191 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>司机注册</title>
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('index/css/invitation.css') }}"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ URL::asset('index/img/shortcutIcon.ico') }}"/>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="{{ URL::asset('index/laydate/laydate.js') }}"></script>
+    {{--<script src="{{ URL::asset('index/js/invitation.js') }}"></script>--}}
+</head>
 <body>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-        -webkit-text-size-adjust: none;
-    }
+<div class="invitation">
+    <!--<img class="bg" src="img/invitationBG.jpg">-->
+    <div class="header">
+        <img id="logo" class="logo" src="{{ URL::asset('index/img/amoLogo.png') }}">
+    </div>
+    <div class="inviCon">
+        <div class="inviForm">
+            <h2>司机注册</h2>
 
-    html {
-        font-size: 10px;
-    }
-
-    body {
-        background-color: #f5f5f5;
-        font-size: 1.2em;
-    }
-
-    .tab {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        height: 44px;
-        line-height: 44px;
-        border-bottom: 1px solid #ff3c3c;
-        background-color: #eee;
-    }
-
-    .tab .item {
-        display: block;
-        -webkit-box-flex: 1;
-        -webkit-flex: 1;
-        -ms-flex: 1;
-        flex: 1;
-        width: 100%;
-        font-size: 14px;
-        text-align: center;
-        color: #333;
-        text-decoration: none;
-    }
-
-    .tab .cur {
-        height: 42px;
-        border-bottom: 2px solid #ff3c3c;
-        color: #ff3c3c;
-    }
-
-    .content {
-        background-color: #fff;
-    }
-
-    .content .item {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-align: center;
-        -webkit-box-align: center;
-        box-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-        padding: 3.125%;
-        border-bottom: 1px solid #ddd;
-        color: #333;
-        text-decoration: none;
-    }
-
-    .content .item h3 {
-        display: block;
-        -webkit-box-flex: 1;
-        -webkit-flex: 1;
-        -ms-flex: 1;
-        flex: 1;
-        width: 100%;
-        max-height: 40px;
-        overflow: hidden;
-        line-height: 20px;
-        margin: 0 10px;
-        font-size: 1.2rem;
-    }
-
-    .content .item .date {
-        display: block;
-        height: 20px;
-        line-height: 20px;
-        color: #999;
-    }
-
-    @-webkit-keyframes opacity {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-
-    @keyframes opacity {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-
-</style>
-<div class="tab">
-    <a href="javascript:;" class="item cur">amo</a>
-</div>
-<table style="width: 100%">
-    <tbody class="content">
-    @foreach($data as $val)
-    <tr>
-        <td>
-            <div>{{ $val['created_at'] }}</div>
-            <div style="width: 50%; float: left;">{{ $val['minute'] }}}({{ $val['fee'] }}})</div>
-            <div style="width: 50%; float: right;">
-                @if($val['refund'] == 0)
-                    {{ $val['refund'] }}}完成
-                @else
-                    {{ $val['refund'] }}}用户退款
-                @endif
+            <ul class="formUl">
+                <li>
+                    <input id="phoneNum" type="tel" class="inputTxt" placeholder="请输入手机号">
+                </li>
+                <li>
+                    <input id="phoneCode" type="text" class="inputTxt input200 fl" placeholder="验证码">
+                    <p class="fr">|<span class="getCode">  获取</span></p>
+                </li>
+                <div>
+                    <button id="confirmPhone">点我跳到下一页！！</button>
+                    {{--<img src="{{ URL::asset('index/img/invitationBtn.png') }}">--}}
+                </div>
+                <li>
+                    <input id="realName" type="tel" class="inputTxt" placeholder="请输入真实姓名">
+                </li>
+                <li>
+                    <input id="phone" type="tel" class="inputTxt" placeholder="请输入手机号">
+                </li>
+                <li>
+                    <input id="carType" type="tel" class="inputTxt" placeholder="请输入车型号">
+                </li>
+                <li>
+                    <input id="carNum" type="tel" class="inputTxt" placeholder="请输入车牌号">
+                </li>
+                <li>
+                    <input id="carColor" type="tel" class="inputTxt" placeholder="请输入车内饰颜色">
+                </li>
+            </ul>
+            <div class="inputSubmit" id="register">
+                <img src="{{ URL::asset('index/img/invitationBtn.png') }}">
             </div>
-        </td>
-    </tr>
-    @endforeach
-    </tbody>
+        </div>
+    </div>
 
-
-</table>
-<button id="getDataBut">获取更多订单</button>
-
-
-</body>
-</html>
-<script src="https://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+</div>
 <script>
+    var oepnId =
+            {{ $openId }}
     var Agreement = window.location.protocol
-    var page = 2;
-    var driverId = {{ $driverId }}
-    $('#getDataBut').click(function () {
-        page += 1
+    lay('#version').html('-v' + laydate.v);
+
+    //时间选择器
+    laydate.render({
+        elem: '#date',
+        type: 'datetime',
+        min: 0
+    });
+    // 获取验证码
+    $(".getCode").click(function () {
+        var mobile = $("#phoneNum").val();
+        if (mobile.length == 0) {
+            alert('请输入手机号码！');
+            $("#phoneCode").focus();
+            return false;
+        }
+        if (mobile.length != 11) {
+            alert('请输入有效的手机号码！');
+            $("#phoneCode").focus();
+            return false;
+        }
+        var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+//        var myreg = /^(((1[0-9][0-9]{1})|159|153)+\d{8})$/;
+        if (!myreg.test(mobile)) {
+            alert('请输入有效的手机号码！');
+            $("#phoneCode").focus();
+            return false;
+        }
+
         $.ajax({
-            type: 'GET',
-            url: Agreement + '/api/addOrderData',
-            data: {'page': page, 'driverId': driverId},
-            dataType: 'json',
-            success: function (data) {
-                console.log(data.data.length)
-                if (data.data.length != 0) {
-                    console.log('获取到数据')
-                    for (i = 0; i < data.data.length; i++) {
-                        if (data.data[i].refund < 1) {
-                            $('.content').append('<tr><td><div>' + data.data[i].created_at + '</div><div style="width: 50%; float: left;">'
-                                + data.data[i].minute + '分(' + data.data[i].fee / 100 + '元)' + '</div><div style="width: 50%; float: right;">成功</div></td></tr>')
-                        } else {
-                            $('.content').append('<tr><td><div>' + data.data[i].created_at + '</div><div style="width: 50%; float: left;">'
-                                + data.data[i].minute + '分(' + data.data[i].fee / 100 + '元)' + '</div><div style="width: 50%; float: right;">退款</div></td></tr>')
-                        }
-                    }
+            url: Agreement + "/api/getCheckCode",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({'phone': mobile, 'tags': 1}),
+            dataType: "text",
+            success: function (res) {
+                var result = JSON.parse(res);
+                if (result.msg) {
+                    alert(result.msg);
                 } else {
-                    console.log('无更多数据')
-                    $('#getDataBut').hide();
+                    alert('请重新获取验证码！');
                 }
+            },
+            error: function (msg) {
+                alert('请重新获取验证码！');
+            }
+        })
+    });
+
+
+    //第一个发送确认手机号按钮
+    $('#confirmPhone').click(function () {
+        code = $('#phoneCode').val()
+        var mobile = $("#phoneNum").val();
+        $.ajax({
+            url: Agreement + "/api/inspectCode",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            /*tags=1 是获取注册的验证码 写死*/
+            data: JSON.stringify({'phone': mobile, 'tags': 1, 'code': code}),
+            dataType: "text",
+            success: function (res) {
+                var result = JSON.parse(res);
+                if (result.msg) {
+                    $('#phone').attr('value', result.data.phone);
+                } else {
+                    alert('请重新获取验证码！');
+                }
+            },
+            error: function (msg) {
+                alert('请重新获取验证码！');
+            }
+        })
+    })
+
+    //确认注册
+    $('#register').click(function () {
+        realName = $('#realName').val();
+        phone = $('#phone').val();
+        carType = $('#carType').val();
+        carColor = $('#carColor').val();
+        carNum = $('#carNum').val();
+        $.ajax({
+            url: Agreement + "/api/registerExecute",
+            type: "POST",
+            data:{
+                'realName': realName,
+                'phone': phone,
+                'carType': carType,
+                'carColor': carColor,
+                'carNum': carNum,
+                'openId': oepnId
+            },
+            dataType: "json",
+            success: function (res) {
+                // var result = JSON.parse(res);
+                console.log(res)
+                if (res.msg) {
+                    alert(res.msg);
+                }else{
+                    alert('失败')
+                }
+            },
+            error: function (msg) {
+                alert('注册失败！');
             }
         })
     })
 </script>
-<script>
+</body>
+</html>
 
-</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

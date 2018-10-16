@@ -15,6 +15,8 @@ class DriverDetailInfo extends Model
      */
     protected $table = 'driver_detail_info';
 
+    protected $fillable = ['driverId', 'name','car_number','car_type','car_color'];
+
     /**
      * 应该被调整为日期的属性
      *

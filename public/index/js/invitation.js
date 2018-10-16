@@ -48,7 +48,7 @@ $(document).ready(function(){
         }
 
         $.ajax({
-           url : "https://liar.3igtech.com/api/getCheckCode",
+           url : "https://wxgzh.dev/api/getCheckCode",
            type : "POST",
            contentType: "application/json;charset=utf-8",
            data : JSON.stringify({'phone':mobile,'tags':5}),
@@ -71,27 +71,6 @@ $(document).ready(function(){
 
     //获取安装地点
     function getAllPlace() {
-        // var data = {
-        //     list: [
-        //         {
-        //             id: 1,
-        //             addr: '北京市1*****'
-        //         },
-        //         {
-        //             id: 2,
-        //             addr: '北京市2*****'
-        //         }
-        //     ]
-        // }
-        // var addrList = data.list;
-        // $("#place").attr("value",addrList[0].addr).attr("placeId",addrList[0].id);
-        // var addrHtml = "";
-        // for( var i = 0; i<addrList.length; i += 1) {
-        //     addrHtml += "<dd value=\""+addrList[i].addr+"\" placeId = \""+addrList[i].id+"\">"+addrList[i].addr+"</dd>"
-        // }
-        // $("#allPlace").html(addrHtml);
-        // infoDD();
-
         $.ajax({
             url : "https://liar.3igtech.com/api/getInstallPlace",
             type : "POST",
