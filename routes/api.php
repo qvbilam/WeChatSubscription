@@ -46,13 +46,13 @@ Route::any('macRepair', 'ViewController@macRepair');                        //�
 /*页面重定向*/
 Route::any('getOpenId', 'ViewController@getOpenId');                        //获取openid
 Route::any('registerList', 'ViewController@registerList');                  //司机注册 ---- 普通
-Route::any('registerExecute', 'WeChatUserController@registerExecute');            //司机注册提交 ---- 普通
+Route::any('registerExecute', 'WeChatUserController@registerExecute');      //司机注册提交 ---- 普通
 Route::any('withdrawMoneyList', 'ViewController@withdrawMoneyList');        //司机提现
 Route::any('getOrderList', 'ViewController@getOrderList');                  //获取司机订单
 Route::any('addOrderData', 'ViewController@addOrderData');                  //增加司机订单
 Route::any('OrderData', 'ViewController@OrderData');                        //订单数据
 Route::any('bindList', 'ViewController@bindList');                          //司机绑定
-Route::any('macRepairList', 'macRepairList@bindList');                      //设备报修
+Route::any('macRepairList', 'ViewController@macRepairList');                //设备报修
 
 /*验证码*/
 Route::any('getCheckCode', 'CheckCodeController@getCheckCode');             //获取验证码
