@@ -124,10 +124,6 @@ class ViewController extends Controller
     public function bindList()
     {
         $openId = self::getOpenId();
-        $driverId = self::judgeUser($openId);
-        if (!$driverId) {
-            return view('error');
-        }
         return view('bind',['openId'=>$openId]);
     }
 
