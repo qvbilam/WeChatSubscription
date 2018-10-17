@@ -71,9 +71,14 @@ class WeChatUserController extends Controller
         if(!$driverId){
             return $this->error(4002,'请去注册');
         }
+        //判断openId是否被其他手机号绑定
+        $count = Driver::where(['openId'=>$openId,'type'=>0])->count('id');
+        if($count!=0){
+            return $this->error(4003,'该微信号已绑定其他手机号');
+        }
         $res = Driver::where(['id'=>$driverId])->update(['openId'=>$openId]);
         if(!$res){
-            return $this->error(4003,'绑定失败');
+            return $this->error(4004,'绑定失败');
         }
         return $this->success(0,'绑定成功',['url'=>view('bind_success')]);
     }
