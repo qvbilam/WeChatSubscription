@@ -11,9 +11,9 @@
 <script src="https://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
 <script>
     var Agreement = window.location.protocol
-    var phone = $('#phone').val()
-    var openId = $('#openId').val()
     $('#bind').click(function () {
+        var phone = $('#phone').val()
+        var openId = $('#openId').val()
         $.ajax({
             type: 'POST',
             url: Agreement + '/api/bindExecute',
