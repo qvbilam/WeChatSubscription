@@ -54,6 +54,7 @@ Route::any('OrderData', 'ViewController@OrderData');                        //�
 Route::any('bindList', 'ViewController@bindList');                          //司机绑定
 Route::any('bindExecute', 'WeChatUserController@bindExecute');              //司机绑定提交
 Route::any('macRepairList', 'ViewController@macRepairList');                //设备报修
+Route::any('repairExecute', 'WeChatUserController@repairExecute');          //设备报修提交
 
 /*验证码*/
 Route::any('getCheckCode', 'CheckCodeController@getCheckCode');             //获取验证码
