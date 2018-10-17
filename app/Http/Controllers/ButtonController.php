@@ -69,8 +69,8 @@ class ButtonController extends Controller
                         },
                         {    
                             "type":"view",
-                            "name":"滴滴司机注册",
-                            "url":"http://www.soso.com/"
+                            "name":"服务号绑定",
+                            "url":"http://wxgzh.qvbilam.xin/api/bind"
                         },
                         {    
                             "type":"click",
@@ -93,8 +93,8 @@ class ButtonController extends Controller
                         },
                         {    
                             "type":"view",
-                            "name":"司机绑定",
-                            "url":"http://wxgzh.qvbilam.xin/api/bind"
+                            "name":"设备绑定",
+                            "url":"http://www.baidu.com"
                         },
                         {    
                             "type":"view",

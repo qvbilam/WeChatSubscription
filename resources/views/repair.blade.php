@@ -1,36 +1,27 @@
 <html>
 <body>
-<h1>司机提现</h1>
-<h3>温馨提示:提现金额大于等于100元,每周三可提现</h3>
+<h1>设备报修</h1>
+<h3>设备位置</h3>
 <input style="display: none;" type="text" id="openId" value="{{ $openId }}">
-可提现金额：<input type="text" value="">
 
-<button id="submit">提现</button>
+<button class="position" value="1">主驾</button>
+<button class="position" value="2">副驾</button>
+<button class="position" value="3">贵宾</button>
 
-<label>照相机</label>
-<input type="file" id='image' accept="image/*" capture='camera'>
-<br>
-<label>摄像机</label>
-<input type="file" id='video' accept="video/*" capture='camcorder'>
+<h3>设备问题</h3>
+
+<label><input id="r5" type="radio" value="付款成功，设备不运动" name="chose">付款成功，设备不运动</label><br>
+<label><input id="r6" type="radio" value="微信小程序无法连接设备" name="chose">微信小程序无法连接设备</label><br>
+<label><input id="r6" type="radio" value="设备运动时长不准确" name="chose">设备运动时长不准确</label><br>
+<label><input id="r6" type="radio" value="设备长时间运动，无法停止" name="chose">设备长时间运动，无法停止</label><br>
+
+<input type="text" id="problem"><br>
+<button id="submit">提交</button>
 </body>
 </html>
 
 <script src="https://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
 <script>
-
-    var file = document.querySelector('input');
-    if (getIos()) {
-        file.removeAttribute("capture");
-    }
-    function getIos() {
-        var ua=navigator.userAgent.toLowerCase();
-        if (ua.match(/iPhone\sOS/i) == "iphone os") {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     var Agreement = window.location.protocol
     var openId = $('#openId').val()
     var position = 0

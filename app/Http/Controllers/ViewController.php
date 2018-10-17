@@ -141,6 +141,7 @@ class ViewController extends Controller
         if (!$driverId) {
             return view('error');
         }
+        return view('repair');
 
     }
 

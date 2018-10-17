@@ -33,8 +33,8 @@ Route::any('getButton', 'ButtonController@getButton');                      //�
 Route::any('responseMsg', 'MessageController@responseMsg');                 //被动回复消息
 
 /*获取用户信息*/
-Route::any('getUserInfo', 'WeChatUserController@getUserInfo');              //获取单个用户信息
-Route::any('getQrCode', 'WeChatUserController@getQrCode');                  //获取单个用户信息
+Route::any('getUserInfo', 'UserController@getUserInfo');              //获取单个用户信息
+Route::any('getQrCode', 'UserController@getQrCode');                  //获取单个用户信息
 
 /*页面*/
 Route::any('register', 'ViewController@register');                          //司机注册 ---- 普通
@@ -46,15 +46,15 @@ Route::any('macRepair', 'ViewController@macRepair');                        //�
 /*页面重定向*/
 Route::any('getOpenId', 'ViewController@getOpenId');                        //获取openid
 Route::any('registerList', 'ViewController@registerList');                  //司机注册 ---- 普通
-Route::any('registerExecute', 'WeChatUserController@registerExecute');      //司机注册提交 ---- 普通
+Route::any('registerExecute', 'UserController@registerExecute');      //司机注册提交 ---- 普通
 Route::any('withdrawMoneyList', 'ViewController@withdrawMoneyList');        //司机提现
 Route::any('getOrderList', 'ViewController@getOrderList');                  //获取司机订单
 Route::any('addOrderData', 'ViewController@addOrderData');                  //增加司机订单
 Route::any('OrderData', 'ViewController@OrderData');                        //订单数据
 Route::any('bindList', 'ViewController@bindList');                          //司机绑定
-Route::any('bindExecute', 'WeChatUserController@bindExecute');              //司机绑定提交
+Route::any('bindExecute', 'UserController@bindExecute');              //司机绑定提交
 Route::any('macRepairList', 'ViewController@macRepairList');                //设备报修
-Route::any('repairExecute', 'WeChatUserController@repairExecute');          //设备报修提交
+Route::any('repairExecute', 'UserController@repairExecute');          //设备报修提交
 
 /*验证码*/
 Route::any('getCheckCode', 'CheckCodeController@getCheckCode');             //获取验证码
