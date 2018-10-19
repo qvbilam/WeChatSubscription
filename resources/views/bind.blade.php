@@ -20,7 +20,7 @@
             data: {'phone': phone, 'openId': openId},
             dataType: 'json',
             success: function (data) {
-                console.log(data.data.length)
+                console.log(data)
             }
         })
     })
