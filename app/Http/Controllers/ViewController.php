@@ -55,7 +55,7 @@ class ViewController extends Controller
         $openId = self::getOpenId();
         $driverId = self::judgeUser($openId);
         if (!$driverId) {
-            return view('error');
+            return view('error',['title'=>'订单管理','msg'=>'未获取到用户信息']);
         }
 
         //统计总页数
@@ -76,7 +76,7 @@ class ViewController extends Controller
 //        ->get()->toArray();
         $data =json_decode(self::OrderData($driverId, 1, self::$offset),true);
         if(!$data['data']){
-            return '没有订单';
+            return view('error',['title'=>'订单管理','error'=>'没有订单']);
         }
         return view('order', ['data' => $data['data'], 'driverId' => $driverId]);
 

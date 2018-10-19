@@ -50,8 +50,10 @@
 </style>
 <body>
 <div class="pic">
-    <img src="https://amo-qrcode.oss-cn-beijing.aliyuncs.com/amo-qrcode/success.png" alt="" />
-    <span class="msg">请在公众号的[加入我们]中绑定</span>
+    {{--<img src="https://amo-qrcode.oss-cn-beijing.aliyuncs.com/amo-qrcode/success.png" alt="" />--}}
+    {{--<span class="msg">请在公众号的[加入我们]中绑定</span>--}}
+    <h1>{{ $title }}</h1>
+    <span class="msg">{{ $msg }}</span>
 </div>
 </body>
 </html>

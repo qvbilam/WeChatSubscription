@@ -13,6 +13,7 @@ use App\Model\DriverDetailInfo;
 use App\Model\MacFault;
 use App\Model\DriverPositionList;
 use App\Http\Controllers\PayController;
+use App\Model\DriverWithdraw;
 
 class UserController extends Controller
 {
@@ -60,7 +61,7 @@ class UserController extends Controller
             DB::rollBack();
         }
         DB::commit();
-        return $this->success(0, '注册成功');
+        return $this->success(0, '注册成功', ['url' => view('success', ['title' => '司机注册', 'msg' => '注册成功'])]);
     }
 
     //用户绑定
@@ -84,7 +85,7 @@ class UserController extends Controller
         if (!$res) {
             return $this->error(4004, '绑定失败');
         }
-        return $this->success(0, '绑定成功', ['url' => view('bind_success')]);
+        return $this->success(0, '绑定成功', ['url' => view('success', ['title' => '用户绑定', 'msg' => '绑定成功'])]);
     }
 
     //用户报修设备
@@ -111,7 +112,7 @@ class UserController extends Controller
         if (!$res) {
             return $this->error(5003, '报修上报失败');
         }
-        return $this->success(0, '报修成功');
+        return $this->success(0, '报修成功',['url' => view('success', ['title' => '设备报修', 'msg' => '设备报修成功'])]);
     }
 
     //用户提现
@@ -127,7 +128,7 @@ class UserController extends Controller
         }
         $money = $request->input('money') * 100;
         $money = (int)$money;
-        if (!$money || $money < 10000) {
+        if (!$money || $money < 100) {
             return $this->error(1304, '提现额度必须大于等于100元');
         }
         $driver = Driver::select('id', 'earning_fee', 'fetch_fee')->where(['openId' => $openId, 'type' => 0])->first();
@@ -143,14 +144,14 @@ class UserController extends Controller
         if ($res['result_code'] == 'SUCCESS') {
             DB::table('drivers')->where('id', $driver['id'])->increment('fetch_fee', $money);
             DriverWithdraw::Create(['driver_id' => $driver['id'], 'withdraw_fee' => $money, 'out_trade_no' => $tradeno]);
-            return $this->error(0, '提现成功');
+            return $this->error(0, '提现成功',['url' => view('success', ['title' => '司机提现', 'msg' => '提现成功'])]);
         } else {
             return $this->error(1301, $res['err_code_des']);
         }
     }
 
     //执行提现
-    public function drawMoney($openId,$money,$tradeno)
+    public function drawMoney($openId, $money, $tradeno)
     {
 
         $pay = new PayController();
