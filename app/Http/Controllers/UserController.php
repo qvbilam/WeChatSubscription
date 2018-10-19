@@ -58,6 +58,7 @@ class UserController extends Controller
             $res = Driver::create(['phone' => $phone, 'type' => $type]);
             DriverDetailInfo::updateOrCreate(['driverId' => $res['id']], ['name' => $name, 'car_number' => $carNum, 'car_type' => $carType, 'car_color' => $carColor]);
         } catch (\Exception $exception) {
+            Log::error('register_error : ' . json_encode($exception));
             return $this->error(3003, '注册失败');
             DB::rollBack();
         }
