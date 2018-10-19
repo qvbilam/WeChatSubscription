@@ -57,26 +57,9 @@ class ViewController extends Controller
         if (!$driverId) {
             return view('error',['title'=>'订单管理','msg'=>'未获取到用户信息']);
         }
-
-        //统计总页数
-//        $data = Coupon::leftJoin('passenger_wxpay_orderlist','passenger_wxpay_orderlist.out_trade_no','=','passenger_coupons.out_trade_no')
-//            ->leftJoin('passenger_combos','passenger_combos.id','=','passenger_coupons.combo_id')
-//            ->where(['passenger_coupons.driverId'=>$driverId])
-//            ->orderBy('passenger_coupons.id','desc')
-//            ->select(
-//                'passenger_coupons.id as couponId',
-//                'passenger_coupons.created_at as created_at',
-//                'passenger_combos.minute as minute',
-//                'passenger_wxpay_orderlist.cash_fee as fee',
-//                'passenger_coupons.refund as refund'
-//            )
-//            ->limit(0,15)
-//            ->get();
-//            ->paginate(15);
-//        ->get()->toArray();
         $data =json_decode(self::OrderData($driverId, 1, self::$offset),true);
         if(!$data['data']){
-            return view('error',['title'=>'订单管理','error'=>'没有订单']);
+            return view('error',['title'=>'订单管理','msg'=>'没有订单']);
         }
         return view('order', ['data' => $data['data'], 'driverId' => $driverId]);
 
@@ -139,7 +122,7 @@ class ViewController extends Controller
         $openId = self::getOpenId();
         $driverId = self::judgeUser($openId);
         if (!$driverId) {
-            return view('error',['title'=>'设备报修','error'=>'未获取到用户信息']);
+            return view('error',['title'=>'设备报修','msg'=>'未获取到用户信息']);
         }
         return view('repair',['openId'=>$openId]);
 
