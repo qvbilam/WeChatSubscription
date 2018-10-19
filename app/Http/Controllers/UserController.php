@@ -14,6 +14,7 @@ use App\Model\MacFault;
 use App\Model\DriverPositionList;
 use App\Http\Controllers\PayController;
 use App\Model\DriverWithdraw;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {

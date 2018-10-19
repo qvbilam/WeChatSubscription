@@ -59,8 +59,8 @@ class TokenController extends Controller
         $response = Curl::to('https://api.weixin.qq.com/cgi-bin/token')
             ->withData([
                 'grant_type' => 'client_credential',
-                'appid' => 'wx9e40a29d39faba87',
-                'secret' => '23bdd2ef6129a278a3af4e57992105b4',
+                'appid' => env('TEST_WECHAT_APPID'),
+                'secret' => env('TEST_WECHAT_SECRET'),
             ])
             ->get();
         $response = json_decode($response, true);

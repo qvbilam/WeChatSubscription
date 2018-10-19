@@ -54,9 +54,11 @@ class ButtonController extends Controller
         return $data = ' {
                      "button":[
                      {    
-                        "type":"view",
+                        "type":"miniprogram",
                         "name":"我要按么",
                         "url":"http://mp.weixin.qq.com",
+                        "appid":"wxf67e5d6039607945",
+                        "pagepath":"pages/index/index"
                         
                      },
                      {
@@ -64,7 +66,7 @@ class ButtonController extends Controller
                         "sub_button":[
                         {    
                             "type":"view",
-                            "name":"普通司机注册",
+                            "name":"司机注册",
                             "url":"http://wxgzh.qvbilam.xin/api/register"
                         },
                         {    
