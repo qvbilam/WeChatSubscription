@@ -13,7 +13,7 @@
     var Agreement = window.location.protocol
     var phone = $('#phone').val()
     var openId = $('#openId').val()
-    $('#phone').click(function () {
+    $('#bind').click(function () {
         $.ajax({
             type: 'POST',
             url: Agreement + '/api/bindExecute',
