@@ -67,12 +67,12 @@ class ButtonController extends Controller
                         {    
                             "type":"view",
                             "name":"司机注册",
-                            "url":"http://wxgzh.qvbilam.xin/api/register"
+                            "url":"http://wechattest.3igtech.com/api/register"
                         },
                         {    
                             "type":"view",
                             "name":"服务号绑定",
-                            "url":"http://wxgzh.qvbilam.xin/api/bind"
+                            "url":"http://wechattest.3igtech.com/api/bind"
                         },
                         {    
                             "type":"click",
@@ -86,22 +86,22 @@ class ButtonController extends Controller
                         {    
                             "type":"view",
                             "name":"司机提现",
-                            "url":"http://wxgzh.qvbilam.xin/api/withdrawMoney"
+                            "url":"http://wechattest.3igtech.com/api/withdrawMoney"
                         },
                         {    
                             "type":"view",
                             "name":"订单管理",
-                            "url":"http://wxgzh.qvbilam.xin/api/getOrder"
+                            "url":"http://wechattest.3igtech.com/api/getOrder"
                         },
                         {    
                             "type":"view",
                             "name":"设备绑定",
-                            "url":"http://www.baidu.com"
+                            "url":"http://wechattest.3igtech.com/api/bind"
                         },
                         {    
                             "type":"view",
                             "name":"设备报修",
-                            "url":"http://wxgzh.qvbilam.xin/api/macRepair"
+                            "url":"http://wechattest.3igtech.com/api/macRepair"
                         }]
                      }
                      ]

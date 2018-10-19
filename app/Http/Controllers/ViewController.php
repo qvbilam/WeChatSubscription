@@ -139,7 +139,7 @@ class ViewController extends Controller
         $openId = self::getOpenId();
         $driverId = self::judgeUser($openId);
         if (!$driverId) {
-            return view('error');
+            return view('error',['title'=>'设备报修','error'=>'未获取到用户信息']);
         }
         return view('repair',['openId'=>$openId]);
 
