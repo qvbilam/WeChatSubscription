@@ -124,7 +124,7 @@ class ViewController extends Controller
         if (!$driverId) {
             return view('error',['title'=>'设备绑定','msg'=>'未获取到用户信息']);
         }
-        return view('mac_bind',['driverId'=>$driverId]);
+        return view('macbind',['driverId'=>$driverId]);
     }
 
     //设备报修
