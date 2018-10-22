@@ -15,19 +15,11 @@ class ViewController extends Controller
     public function register()
     {
         return view('register');
-//        $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/registerList';
-//        self::requestWechat($REDIRECT_URI);
-//        header("Location:" . $REDIRECT_URI);
     }
 
     public function registerList()
     {
-//        $openId = self::getOpenId();
-//        $res = self::judgeUser($openId);
-//        if (!$res) {
-//            return view('error');
-//        }
-//        return view('register');
+
     }
 
     //司机提现
@@ -40,7 +32,15 @@ class ViewController extends Controller
     public function withdrawMoneyList()
     {
         $openId = self::getOpenId();
-        echo "提现 : " . $openId;
+        //因为规定绑定只能绑定一个所以first
+        $driverId = self::judgeUser($openId);
+        if (!$driverId) {
+            return view('error',['title'=>'提现','msg'=>'未获取到用户信息']);
+        }
+        $fee = Driver::select('earning_fee','fetch_fee')->where(['openId'=>$openId,'type'=>0])->first();
+        $money = $fee['earning_fee'] - $fee['fetch_fee'];
+        return view('withdraw',['openId'=>$openId,'money'=>$money]);
+//        echo "提现 : " . $openId;
     }
 
     //司机订单
@@ -107,7 +107,24 @@ class ViewController extends Controller
     public function bindList()
     {
         $openId = self::getOpenId();
-        return view('bind',['openId'=>$openId]);
+        return view('wx_bind',['openId'=>$openId]);
+    }
+
+    //设备绑定
+    public function macBind()
+    {
+        $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/bindList';
+        self::requestWechat($REDIRECT_URI);
+    }
+
+    public function macBindList()
+    {
+        $openId = self::getOpenId();
+        $driverId = self::judgeUser($openId);
+        if (!$driverId) {
+            return view('error',['title'=>'设备绑定','msg'=>'未获取到用户信息']);
+        }
+        return view('mac_bind',['driverId'=>$driverId]);
     }
 
     //设备报修
@@ -147,7 +164,6 @@ class ViewController extends Controller
         } else if (isset($_GET['page'])) {
             return self::addOrderData($_GET['page']);
         }
-
 
     }
 

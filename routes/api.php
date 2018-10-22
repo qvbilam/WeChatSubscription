@@ -49,6 +49,8 @@ Route::any('registerList', 'ViewController@registerList');                  //�
 Route::any('registerExecute', 'UserController@registerExecute');            //司机注册提交 ---- 普通
 Route::any('withdrawMoneyList', 'ViewController@withdrawMoneyList');        //司机提现
 Route::any('withdrawMoneyExecute', 'UserController@withdrawMoneyExecute');  //司机提现 ------- 执行
+Route::any('macBind', 'ViewController@macBind');                            //设备绑定
+Route::any('macBindExecute', 'UserController@macBindExecute');              //设备绑定 ------- 执行
 Route::any('getOrderList', 'ViewController@getOrderList');                  //获取司机订单
 Route::any('addOrderData', 'ViewController@addOrderData');                  //增加司机订单
 Route::any('OrderData', 'ViewController@OrderData');                        //订单数据

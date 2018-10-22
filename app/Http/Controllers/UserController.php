@@ -66,7 +66,7 @@ class UserController extends Controller
         return $this->success(0, '注册成功', ['url' => view('success', ['title' => '司机注册', 'msg' => '注册成功'])]);
     }
 
-    //用户绑定
+    //用户绑定  需要注册用户 并且微信号没有绑定过去其他账号
     public function bindExecute(Request $request)
     {
         $phone = $request->input('phone');
@@ -117,6 +117,65 @@ class UserController extends Controller
         return $this->success(0, '报修成功',['url' => view('success', ['title' => '设备报修', 'msg' => '设备报修成功'])]);
     }
 
+    //用户设备绑定
+    public function macBindExecute(Request $request)
+    {
+        $driverId = $request->input('driverId');
+        $mac = $request->input('mac');
+        $macPool = MacPool::select('imei','status')->where(['mac_id', $mac])->first();
+        if (!$macPool) {
+            return $this->error(-20001, '请扫正确的二维码');
+        }
+        if($macPool>=4){
+            return $this->error(-20002, '该设备已被使用');
+        }
+        $position = $request->input('position');
+        if ($driverId && $position && $mac && strlen($mac) >= 10) {
+            $driver = Driver::select(['id'])->where(['id' => $driverId, 'type' => 1])->first();
+            if (!($driver && $driver['id'])) {
+                return $this->error(-20003, '获取个人信息失败');
+            }
+            //查询这个人是否在座椅绑定过座椅
+            $res = DriverPositionList::where(['driverId'=>$driverId['id'],'position'=>$position])->first();
+            if($res){
+                return $this->error(-20006, '该位置已经绑定了座椅');
+            }
+            DB::beginTransaction();
+            try {
+                $mac = strval($mac);
+                $host = 'https://' . $_SERVER['SERVER_NAME'];
+                $hostprefix = $host . '/?mac=';
+                $qrcode_url = $hostprefix . $mac; //二维码内容
+                $outfile_inner = "./image/" . $mac . ".png"; //二维码储存url
+                $outfile_outer = $host . "/image/" . $mac . ".png"; // 返回二维码给前端的url
+                if (!file_exists($outfile_inner)) {
+                    \PHPQRCode\QRcode::png($qrcode_url, $outfile_inner, 'L', 100, 2);
+                }
+                $DriverPositionList_rst = DriverPositionList::updateOrCreate([
+                    'driverId' => $driver['id'],
+                    'mac_id' => $mac,
+                    'position' => $position,
+                ], ['qrcodeUrl' => $outfile_outer]);
+                if ($DriverPositionList_rst) {
+                    $driver = Driver::updateOrCreate(['id' => $driver['id']], ['status' => 4]);
+                    MacPool::where(['mac_id' => $mac])->update(['status' => 4]);
+                }
+            } catch (\Exception $exception) {
+                DB::rollback();
+                Log::error('driverBind error: ' . json_encode($exception));
+                return $this->error(-20004, '绑定失败');
+            }
+            DB::commit();
+            return $this->success(0, '绑定成功', [
+                'status' => $driver['status'],
+                'qrcodeUrl' => $outfile_outer,
+                'imei' => $macPool['imei'] . 0
+            ]);
+        } else {
+            return $this->error(-20005, '请选择座椅位置并输入正确的设备mac');
+        }
+    }
+
     //用户提现
     public function withdrawMoneyExecute(Request $request)
     {
@@ -161,4 +220,5 @@ class UserController extends Controller
         return $res;
 //        return $res['result_code'];
     }
+
 }
