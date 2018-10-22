@@ -113,7 +113,7 @@ class ViewController extends Controller
     //设备绑定
     public function macBind()
     {
-        $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/bindList';
+        $REDIRECT_URI = env('TEST_WECHAT_WEB_ME') . '/api/macBindList';
         self::requestWechat($REDIRECT_URI);
     }
 
