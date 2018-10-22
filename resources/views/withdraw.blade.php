@@ -16,9 +16,8 @@
     var Agreement = window.location.protocol
     var openId = $('#openId').val()
 
-
     $('#submit').click(function () {
-        $money = $('#money').val()
+        money = $('#money').val()
         $.ajax({
             type: 'POST',
             url: Agreement + '/api/withdrawMoneyExecute',
