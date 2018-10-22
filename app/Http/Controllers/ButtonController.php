@@ -96,7 +96,7 @@ class ButtonController extends Controller
                         {    
                             "type":"view",
                             "name":"设备绑定",
-                            "url":"http://wechattest.3igtech.com/api/bind"
+                            "url":"http://wechattest.3igtech.com/api/macBind"
                         },
                         {    
                             "type":"view",
