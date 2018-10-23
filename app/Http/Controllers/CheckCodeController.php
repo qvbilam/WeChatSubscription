@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Plugins\Aliyunsms\SignatureHelper;
 use App\Model\CheckCode;
 use Illuminate\Support\Facades\Log;
+use App\Model\Driver;
 
 class CheckCodeController extends Controller
 {
@@ -13,7 +14,7 @@ class CheckCodeController extends Controller
     public function getCheckCode(Request $request)
     {
         $phone = $request->input('phone');
-        $tags = $request->input('tags'); //1.注册，2.修改手机，3.修改密码 4.受邀人获取验证码
+        $tags = $request->input('tags');
         if ($phone && $tags >= 1) {
             $code = $this->GetRandStr(4);
             $sendSms_rst = $this->sendSms($phone, $code);
@@ -33,20 +34,29 @@ class CheckCodeController extends Controller
         }
     }
 
+    //检验验证码.+注册绑定openId
     public function inspectCode(Request $request)
     {
-        $phone = $request->input('phone',0);
-        $code = $request->input('code',0);
-        $tags = $request->input('tags',0);
+        $phone = $request->input('phone', 0);
+        $code = $request->input('code', 0);
+        $tags = $request->input('tags', 0);
+        $openId = $request->input('openId');
+        if (!$openId) {
+            return $this->error(2001, '未获取到openId');
+        }
         $res = CheckCode::where([
             'phone' => $phone,
             'code' => $code,
             'tags' => $tags
         ])->value('id');
-        if(!$res){
-            return $this->error(2001,'验证码错误');
+        if (!$res) {
+            return $this->error(2002, '验证码错误');
         }
-        return $this->success(0,'ok',['phone'=>$phone]);
+        $result = Driver::updateOrCreate(['phone' => $phone], ['openId' => $openId]);
+        if(!$result){
+            return $this->error(2003,'验证失败');
+        }
+        return $this->success(0, 'ok', ['phone' => $phone]);
     }
 
     //获取随机数

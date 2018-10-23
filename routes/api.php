@@ -45,23 +45,31 @@ Route::any('macRepair', 'ViewController@macRepair');                        //�
 Route::any('macBind', 'ViewController@macBind');                            //设备绑定
 
 /*页面重定向*/
-Route::any('getOpenId', 'ViewController@getOpenId');                        //获取openid
 Route::any('registerList', 'ViewController@registerList');                  //司机注册 ---- 普通
-Route::any('registerExecute', 'UserController@registerExecute');            //司机注册提交 ---- 普通
+
 Route::any('withdrawMoneyList', 'ViewController@withdrawMoneyList');        //司机提现
-Route::any('withdrawMoneyExecute', 'UserController@withdrawMoneyExecute');  //司机提现 ------- 执行
+
 Route::any('macBindList', 'ViewController@macBindList');                    //设备绑定
-Route::any('macBindExecute', 'UserController@macBindExecute');              //设备绑定 ------- 执行
+
 Route::any('getOrderList', 'ViewController@getOrderList');                  //获取司机订单
 Route::any('addOrderData', 'ViewController@addOrderData');                  //增加司机订单
 Route::any('OrderData', 'ViewController@OrderData');                        //订单数据
 Route::any('bindList', 'ViewController@bindList');                          //司机绑定
 Route::any('bindExecute', 'UserController@bindExecute');                    //司机绑定提交
 Route::any('macRepairList', 'ViewController@macRepairList');                //设备报修
-Route::any('repairExecute', 'UserController@repairExecute');                //设备报修提交
+
 
 /*验证码*/
 Route::any('getCheckCode', 'CheckCodeController@getCheckCode');             //获取验证码
 Route::any('inspectCode', 'CheckCodeController@inspectCode');               //检查验证码
+
+/*接口地址*/
+Route::any('getOpenId', 'ViewController@getOpenId');                        //获取openid
+Route::any('Authentication', 'UserController@Authentication');            //司机认证
+Route::any('perfect', 'UserController@perfect');            //司机完善个人信息
+Route::any('macBindExecute', 'UserController@macBindExecute');              //设备绑定 ------- 执行
+Route::any('withdrawMoneyExecute', 'UserController@withdrawMoneyExecute');  //司机提现 ------- 执行
+Route::any('repairExecute', 'UserController@repairExecute');                //设备报修提交
+
 
 
