@@ -83,8 +83,8 @@ class UserController extends Controller
         DB::beginTransaction();
         try {
             //'openId' => $openId,不加入。用户自行绑定
-            $driver = Driver::select('id','status')->where(['phone' => $phone, 'type' => $type])->first();
-            if($driver['status'] != 4){
+            $driver = Driver::select('id', 'status')->where(['phone' => $phone, 'type' => $type])->first();
+            if ($driver['status'] != 4) {
                 Driver::where(['driverId' => $driver['id']])->update(['status' => 3]);
             }
             DriverDetailInfo::updateOrCreate(['driverId' => $driver['id']], ['name' => $name, 'car_number' => $carNum, 'car_type' => $carType, 'car_color' => $carColor]);
@@ -94,9 +94,8 @@ class UserController extends Controller
             DB::rollBack();
         }
         DB::commit();
-        return $this->success(0, '完善个人信息成功',  ['phone'=>$phone]);
+        return $this->success(0, '完善个人信息成功', ['phone' => $phone]);
     }
-
 
 
     //用户报修设备
@@ -131,9 +130,9 @@ class UserController extends Controller
     {
 //        $driverId = $request->input('driverId');
         $openId = $request->input('openId');
-        $driverId = Driver::where(['openId'=>$openId,'type'=>0])->value('id');
+        $driverId = Driver::where(['openId' => $openId, 'type' => 0])->value('id');
         $mac = $request->input('mac');
-        $macPool = MacPool::select('imei', 'status')->where(['mac_id'=>$mac])->first();
+        $macPool = MacPool::select('imei', 'status')->where(['mac_id' => $mac])->first();
         if (!$macPool) {
             return $this->error(6001, '请扫正确的二维码');
         }
@@ -142,7 +141,7 @@ class UserController extends Controller
         }
         $position = $request->input('position');
         if ($driverId && $position && $mac && strlen($mac) >= 10) {
-            $driver = Driver::select(['id'])->where(['id' => $driverId, 'type' => 1])->first();
+            $driver = Driver::select(['id'])->where(['id' => $driverId, 'type' => 0])->first();
             if (!($driver && $driver['id'])) {
                 return $this->error(6003, '获取个人信息失败');
             }
@@ -216,7 +215,7 @@ class UserController extends Controller
         if ($res['result_code'] == 'SUCCESS') {
             DB::table('drivers')->where('id', $driver['id'])->increment('fetch_fee', $money);
             DriverWithdraw::Create(['driver_id' => $driver['id'], 'withdraw_fee' => $money, 'out_trade_no' => $tradeno]);
-            return $this->error(0, '提现成功', ['withdr_fee'=>$money]);
+            return $this->error(0, '提现成功', ['withdr_fee' => $money]);
         } else {
             return $this->error(7004, $res['err_code_des']);
         }
