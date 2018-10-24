@@ -15,6 +15,7 @@ use App\Model\DriverPositionList;
 use App\Http\Controllers\PayController;
 use App\Model\DriverWithdraw;
 use Illuminate\Support\Facades\Log;
+use App\Model\CheckCode;
 
 class UserController extends Controller
 {
