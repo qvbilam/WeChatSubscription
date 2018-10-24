@@ -137,7 +137,7 @@ class UserController extends Controller
         if (!$macPool) {
             return $this->error(6001, '请扫正确的二维码');
         }
-        if ($macPool >= 4) {
+        if ($macPool['status'] >= 4) {
             return $this->error(6002, '该设备已被使用');
         }
         $position = $request->input('position');
