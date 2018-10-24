@@ -83,7 +83,7 @@ class UserController extends Controller
         DB::beginTransaction();
         try {
             //'openId' => $openId,不加入。用户自行绑定
-            $driver = Driver::select('id','status')->where(['phone' => $phone, 'type' => $type])->first('id');
+            $driver = Driver::select('id','status')->where(['phone' => $phone, 'type' => $type])->first();
             if($driver['status'] != 4){
                 Driver::where(['driverId' => $driver['id']])->update(['status' => 3]);
             }
