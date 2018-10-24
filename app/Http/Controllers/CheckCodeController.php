@@ -52,7 +52,7 @@ class CheckCodeController extends Controller
         if (!$res) {
             return $this->error(2002, '验证码错误');
         }
-        $result = Driver::updateOrCreate(['phone' => $phone], ['openId' => $openId]);
+        $result = Driver::updateOrCreate(['phone' => $phone,'type'=>0], ['openId' => $openId]);
         if(!$result){
             return $this->error(2003,'验证失败');
         }
