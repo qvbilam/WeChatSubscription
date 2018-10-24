@@ -97,29 +97,7 @@ class UserController extends Controller
         return $this->success(0, '完善个人信息成功',  ['phone'=>$phone]);
     }
 
-    //用户绑定  需要注册用户 并且微信号没有绑定过去其他账号 ======= 废用
-    public function bindExecute(Request $request)
-    {
-        $phone = $request->input('phone');
-        $openId = $request->input('openId');
-        if (!$phone) {
-            return $this->error(4001, '请填写手机号');
-        }
-        $driverId = Driver::where(['phone' => $phone, 'type' => 0])->value('id');
-        if (!$driverId) {
-            return $this->error(4002, '请去注册');
-        }
-        //判断openId是否被其他手机号绑定
-        $count = Driver::where(['openId' => $openId, 'type' => 0])->count('id');
-        if ($count != 0) {
-            return $this->error(4003, '该微信号已绑定其他手机号');
-        }
-        $res = Driver::where(['id' => $driverId])->update(['openId' => $openId]);
-        if (!$res) {
-            return $this->error(4004, '绑定失败');
-        }
-        return $this->success(0, '绑定成功', ['url' => view('success', ['title' => '用户绑定', 'msg' => '绑定成功'])]);
-    }
+
 
     //用户报修设备
     public function repairExecute(Request $request)
@@ -155,7 +133,7 @@ class UserController extends Controller
         $openId = $request->input('openId');
         $driverId = Driver::where(['openId'=>$openId,'type'=>0])->value('id');
         $mac = $request->input('mac');
-        $macPool = MacPool::select('imei', 'status')->where(['mac_id', $mac])->first();
+        $macPool = MacPool::select('imei', 'status')->where(['mac_id'=>$mac])->first();
         if (!$macPool) {
             return $this->error(6001, '请扫正确的二维码');
         }

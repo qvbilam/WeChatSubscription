@@ -10,6 +10,9 @@ use App\Http\Controllers\ButtonController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Log;
 use App\Model\UserMsg;
+use Illuminate\Support\Facades\DB;
+use App\Model\Driver;
+use App\Model\DriverDetailInfo;
 
 
 class WeChatController extends Controller
@@ -61,9 +64,33 @@ class WeChatController extends Controller
         return $response;
     }
 
-    public function test()
+    public function test(Request $request)
     {
-        return view('ceshi',['openId'=>'o870O1NTR8rNpjzVYLnRXbkQyf-E']);
+        $phone = $request->input('phone');
+        $name = $request->input('realName');
+        $carType = $request->input('carType');
+        $carColor = $request->input('carColor');
+        $carNum = $request->input('carNum');
+//        $openId = $request->input('openId');
+        $type = 0;
+        if (!$phone || !$name || !$carType || !$carColor || !$carNum) {
+            return $this->error(3001, '请填写完整信息');
+        }
+        DB::beginTransaction();
+        try {
+            //'openId' => $openId,不加入。用户自行绑定
+            $driver = Driver::select('id','status')->where(['phone' => $phone, 'type' => $type])->first();
+            if($driver['status'] != 4){
+                Driver::where(['driverId' => $driver['id']])->update(['status' => 3]);
+            }
+            DriverDetailInfo::updateOrCreate(['driverId' => $driver['id']], ['name' => $name, 'car_number' => $carNum, 'car_type' => $carType, 'car_color' => $carColor]);
+        } catch (\Exception $exception) {
+            Log::error('register_error : ' . json_encode($exception));
+            return $this->error(3002, '完善个人信息失败');
+            DB::rollBack();
+        }
+        DB::commit();
+        return $this->success(0, '完善个人信息成功',  ['phone'=>$phone]);
     }
 
     public function testajax(Request $request)
