@@ -29,6 +29,13 @@ class TokenController extends Controller
         return Redis::get('wxgzh_token');
     }
 
+    //返回token接口
+    public function returnToken()
+    {
+        $token = self::getToken();
+        return $this->succsee(0,'ok',['token'=>$token]);
+    }
+
 
     static public function checkSignature()
     {

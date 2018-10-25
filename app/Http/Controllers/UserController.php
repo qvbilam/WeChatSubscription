@@ -190,22 +190,25 @@ class UserController extends Controller
     public function withdrawMoneyExecute(Request $request)
     {
         $week = date("w");
-        if ($week != 1) {
+        if ($week != 3) {
             return $this->error(7000, '每周三满100可提');
         }
         $openId = $request->input('openId');
         if (!$openId) {
-            return $this->error(7001, '您没有通过司机认证');
+            return $this->error(7001, '未获取到用户信息');
+        }
+        $driver = Driver::select('id', 'earning_fee', 'fetch_fee')->where(['openId' => $openId, 'type' => 0])->first();
+        if(!$driver && !$driver['id']){
+            return $this->error(7002,'您没有通过司机认证');
         }
         $money = $request->input('money') * 100;
         $money = (int)$money;
         if (!$money || $money < 100) {
-            return $this->error(7002, '提现额度必须大于等于100元');
+            return $this->error(7003, '提现额度必须大于等于100元');
         }
-        $driver = Driver::select('id', 'earning_fee', 'fetch_fee')->where(['openId' => $openId, 'type' => 0])->first();
         $withdraw_money = $driver['earning_fee'] - $driver['fetch_fee'];
         if ($withdraw_money < $money) {
-            return $this->error(7003, '欲提额度不能大于可提现额度');
+            return $this->error(7004, '欲提额度不能大于可提现额度');
         }
         $tradeno = $driver['id'] . date('ymdhis', time());
         $res = $this->drawMoney($openId, $money, $tradeno);
@@ -217,7 +220,7 @@ class UserController extends Controller
             DriverWithdraw::Create(['driver_id' => $driver['id'], 'withdraw_fee' => $money, 'out_trade_no' => $tradeno]);
             return $this->error(0, '提现成功', ['withdr_fee' => $money]);
         } else {
-            return $this->error(7004, $res['err_code_des']);
+            return $this->error(7005, $res['err_code_des']);
         }
     }
 
