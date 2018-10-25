@@ -45,7 +45,7 @@ class UserController extends Controller
         if (!$openId) {
             return $this->error(2001, '未获取到openId');
         }
-        $driver = Driver::select('id','phone','status')->where(['openId'=>$openId,'type' => 0]);
+        $driver = Driver::select('id','phone','status')->where(['openId'=>$openId,'type' => 0])->first();
         if(!$driver){
             return $this->error(2002,'未通过司机认证');
         }
