@@ -33,7 +33,7 @@ class TokenController extends Controller
     public function returnToken()
     {
         $token = self::getToken();
-        return $this->succsee(0,'ok',['token'=>$token]);
+        return self::succsee(0,'ok',['token'=>$token]);
     }
 
 
