@@ -50,18 +50,18 @@ class ViewController extends Controller
         self::requestWechat($REDIRECT_URI);
     }
 
-    static public function getOrderList()
+    static public function getOrderList(Request $request)
     {
-        $openId = self::getOpenId();
+        $openId = $request->input('openId');
         $driverId = self::judgeUser($openId);
         if (!$driverId) {
-            return view('error',['title'=>'订单管理','msg'=>'未获取到用户信息']);
+            return Controller::success('7001','未获取到用户信息');
         }
         $data =json_decode(self::OrderData($driverId, 1, self::$offset),true);
         if(!$data['data']){
-            return view('error',['title'=>'订单管理','msg'=>'没有订单']);
+            return Controller::success('7002','没有订单');
         }
-        return view('order', ['data' => $data['data'], 'driverId' => $driverId]);
+        return Controller::success('0','ok', ['data' => $data['data'], 'driverId' => $driverId]);
 
     }
 
