@@ -30,7 +30,7 @@ class UserController extends Controller
                 "&secret=" . $SECRET .
                 "&code={$code}&grant_type=authorization_code");
             $uinfo = (array)json_decode($uinfo);
-            if(!$uinfo || !$uinfo['openid']){
+            if(!$uinfo || !isset($uinfo['openid'])){
                 return $this->error(-10002,'code验证失败');
             }
             $openid = $uinfo['openid'];
