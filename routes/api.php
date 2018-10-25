@@ -74,6 +74,8 @@ Route::any('returnOpenId', 'UserController@returnOpenId');                //获�
 Route::any('driverVerification', 'UserController@driverVerification');                //检查司机是否认证过
 Route::any('getWithdraw', 'UserController@getWithdraw');                //获取可提现的钱
 Route::any('returnToken', 'TokenController@returnToken');                //returnToken
+Route::any('returnTicket', 'TokenController@returnTicket');                //returnTicket
+Route::any('getSignPackage', 'JssdkController@getSignPackage');                //getSignPackage
 
 
 

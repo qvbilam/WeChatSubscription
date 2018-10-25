@@ -30,6 +30,26 @@ class TokenController extends Controller
         return Redis::get('wxgzh_token');
     }
 
+    //获取jsapi_ticket
+    static public function getJsapiTicket()
+    {
+        $ticket = Redis::exists('wxgzh_ticket');
+        if(!$ticket){
+            return self::wechatGetTicket();
+        }
+        return Redis::get('wxgzh_ticket');
+    }
+
+    //返回jsapi_ticket
+    public function returnTicket()
+    {
+        $ticket = self::getJsapiTicket();
+        if(!$ticket){
+            return $this->error(-1,'未获取到jsapi_ticket');
+        }
+        return $this->success(0,'ok',['ticket' => $ticket]);
+    }
+
     //返回token接口
     public function returnToken()
     {
@@ -74,6 +94,19 @@ class TokenController extends Controller
         $response = json_decode($response, true);
         Redis::setex('wxgzh_token', 7200, $response['access_token']);
         return $response['access_token'];
+    }
+
+    static private function wechatGetTicket()
+    {
+        $response = Curl::to('https://api.weixin.qq.com/cgi-bin/ticket/getticket')
+            ->withData([
+                'access_token' => self::getToken(),
+                'type' => 'jsapi'
+            ])
+            ->get();
+        $response = json_decode($response, true);
+        Redis::setex('wxgzh_ticket',7200,$response['ticket']);
+        return $response['ticket'];
     }
 
 
