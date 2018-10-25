@@ -30,6 +30,9 @@ class UserController extends Controller
                 "&secret=" . $SECRET .
                 "&code={$code}&grant_type=authorization_code");
             $uinfo = (array)json_decode($uinfo);
+            if(!$uinfo || !$uinfo['openid']){
+                return $this->error(-10002,'code验证失败');
+            }
             $openid = $uinfo['openid'];
             return $this->success(0, 'ok', ['openId' => $openid]);
             //可能来自订单分页
