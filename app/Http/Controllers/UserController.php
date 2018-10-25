@@ -19,6 +19,53 @@ use App\Model\CheckCode;
 
 class UserController extends Controller
 {
+    public function returnOpenId(Request $request)
+    {
+        $APPID = env('TEST_WECHAT_APPID');
+        $SECRET = env('TEST_WECHAT_SECRET');
+        $state = 'TEST';
+        if (isset($_GET['code'])) {
+            $code = $_GET['code'];
+            $uinfo = file_get_contents("https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $APPID .
+                "&secret=" . $SECRET .
+                "&code={$code}&grant_type=authorization_code");
+            $uinfo = (array)json_decode($uinfo);
+            $openid = $uinfo['openid'];
+            return $this->success(0, 'ok', ['openId' => $openid]);
+            //可能来自订单分页
+        } else if (isset($_GET['page'])) {
+            return $this->error(-10001,'未获取到openId');
+        }
+    }
+
+    //检查司机是否认证过
+    public function driverVerification(Request $request)
+    {
+        $openId = $request->input('openId');
+        if (!$openId) {
+            return $this->error(2001, '未获取到openId');
+        }
+        $driver = Driver::select('id','phone','status')->where(['openId'=>$openId,'type' => 0]);
+        if(!$driver){
+            return $this->error(2002,'未通过司机认证');
+        }
+        return $this->success(0,'ok',$driver);
+
+    }
+
+    //获取可提现的钱
+    public function getWithdraw(Request $request)
+    {
+        $phone = $request->input('phone');
+        $money = Driver::select('earning_fee','fetch_fee')->where(['phone'=>$phone,'type'=>0])->first();
+        if(!$money){
+            return $this->error(2003,'未获取到用户可提现的钱');
+        }
+        $fee = $money['earning_fee'] - $money['fetch_fee'];
+        return $this->success(0,'ok',['earning_fee'=>$money['earning_fee'],'fetch_fee'=>$money['fetch_fee'],'fee'=>$fee]);
+
+    }
+
     //获取用户信息
     static public function getUserInfo($openId = 'o870O1NTR8rNpjzVYLnRXbkQyf-E')
     {
@@ -198,8 +245,8 @@ class UserController extends Controller
             return $this->error(7001, '未获取到用户信息');
         }
         $driver = Driver::select('id', 'earning_fee', 'fetch_fee')->where(['openId' => $openId, 'type' => 0])->first();
-        if(!$driver && !$driver['id']){
-            return $this->error(7002,'您没有通过司机认证');
+        if (!$driver && !$driver['id']) {
+            return $this->error(7002, '您没有通过司机认证');
         }
         $money = $request->input('money') * 100;
         $money = (int)$money;
