@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
 use Illuminate\Support\Facades\Redis;
+use App\Http\Controllers\Controller;
 
 
 class TokenController extends Controller
@@ -33,7 +34,7 @@ class TokenController extends Controller
     public function returnToken()
     {
         $token = self::getToken();
-        return self::succsee(0,'ok',['token'=>$token]);
+        return Controller::success(0,'ok',['token'=>$token]);
     }
 
 
