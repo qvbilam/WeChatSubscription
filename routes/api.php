@@ -70,6 +70,7 @@ Route::any('perfect', 'UserController@perfect');            //司机完善个人
 Route::any('macBindExecute', 'UserController@macBindExecute');              //设备绑定 ------- 执行
 Route::any('withdrawMoneyExecute', 'UserController@withdrawMoneyExecute');  //司机提现 ------- 执行
 Route::any('repairExecute', 'UserController@repairExecute');                //设备报修提交
+Route::any('returnToken', 'TokenController@returnToken');                //returnToken
 
 
 
