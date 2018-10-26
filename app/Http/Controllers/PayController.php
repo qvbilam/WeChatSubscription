@@ -156,7 +156,7 @@ class PayController extends Controller
     public function putForward($money,$openId,$tradeno)
     {
         $url = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
-        $appId = env('TEST_WECHAT_APPID');
+        $appId = env('MINI_APP_ID');
         $mchId = env('MCHID');
         $nonce_str = WxpayController::getNonceStr();
         //$sign_type = 'MD5';

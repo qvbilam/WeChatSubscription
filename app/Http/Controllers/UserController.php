@@ -203,7 +203,7 @@ class UserController extends Controller
                 return $this->error(6003, '获取个人信息失败');
             }
             //查询这个人是否在座椅绑定过座椅
-            $res = DriverPositionList::where(['driverId' => $driverId['id'], 'position' => $position])->first();
+            $res = DriverPositionList::where(['driverId' => $driverId, 'position' => $position])->first();
             if ($res) {
                 return $this->error(6006, '该位置已经绑定了座椅');
             }
