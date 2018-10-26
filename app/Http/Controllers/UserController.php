@@ -247,7 +247,7 @@ class UserController extends Controller
     public function withdrawMoneyExecute(Request $request)
     {
         $week = date("w");
-        if ($week != 4) {
+        if ($week != 5) {
             return $this->error(7000, '每周三满100可提');
         }
         $openId = $request->input('openId');
