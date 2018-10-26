@@ -49,7 +49,7 @@ class UserController extends Controller
             return $this->error(2001, '未获取到openId');
         }
         $driver = Driver::select('id','phone','status','company')->where(['openId'=>$openId,'type' => 0])->first();
-        $driver['carType'] = DriverDetailInfo::where(['driverId'=>$driver['id']])->value('carType');
+        $driver['carType'] = DriverDetailInfo::where(['driverId'=>$driver['id']])->value('car_type');
         if($driver['status'] == 4){
             $driver['bind'] = DriverPositionList::where(['driverId'=>$driver['id']])->select('mac_id','position')->get();
         }
