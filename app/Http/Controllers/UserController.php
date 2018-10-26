@@ -49,6 +49,12 @@ class UserController extends Controller
             return $this->error(2001, '未获取到openId');
         }
         $driver = Driver::select('id','phone','status')->where(['openId'=>$openId,'type' => 0])->first();
+        if($driver['status'] == 3){
+
+        }
+        if($driver['status'] == 4){
+            DriverPositionList::where(['driverId'=>$driver['id']])->select('')->get();
+        }
         if(!$driver){
             return $this->error(2002,'未通过司机认证');
         }
@@ -120,14 +126,16 @@ class UserController extends Controller
     //完善个人信息
     public function perfect(Request $request)
     {
+        //手机号，姓名，车型号，租贷公司
         $phone = $request->input('phone');
         $name = $request->input('realName');
         $carType = $request->input('carType');
-        $carColor = $request->input('carColor');
-        $carNum = $request->input('carNum');
+//        $carColor = $request->input('carColor');
+//        $carNum = $request->input('carNum');
+        $company = $request->input('company');
 //        $openId = $request->input('openId');
         $type = 0;
-        if (!$phone || !$name || !$carType || !$carColor || !$carNum) {
+        if (!$phone || !$name || !$carType || !$company) {
             return $this->error(3001, '请填写完整信息');
         }
         DB::beginTransaction();
@@ -137,14 +145,15 @@ class UserController extends Controller
             if ($driver['status'] != 4) {
                 Driver::where(['driverId' => $driver['id']])->update(['status' => 3]);
             }
-            DriverDetailInfo::updateOrCreate(['driverId' => $driver['id']], ['name' => $name, 'car_number' => $carNum, 'car_type' => $carType, 'car_color' => $carColor]);
+            Driver::where('id',$driver['id'])->update(['company' => $company]);
+            DriverDetailInfo::updateOrCreate(['driverId' => $driver['id']], ['name' => $name, 'car_type' => $carType]);
         } catch (\Exception $exception) {
             Log::error('register_error : ' . json_encode($exception));
             return $this->error(3002, '完善个人信息失败');
             DB::rollBack();
         }
         DB::commit();
-        return $this->success(0, '完善个人信息成功', ['phone' => $phone]);
+        return $this->success(0, '完善个人信息成功', ['phone' => $phone,'realName'=>$name,'company'=>$company,'carType'=>$carType]);
     }
 
 
