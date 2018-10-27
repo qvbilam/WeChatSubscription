@@ -79,3 +79,7 @@ Route::any('getSignPackage', 'JssdkController@getSignPackage');                /
 
 
 
+Route::any('requestWechat', 'ViewController@requestWechat');                //获取重定向的页面
+
+
+

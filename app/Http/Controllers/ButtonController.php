@@ -70,11 +70,6 @@ class ButtonController extends Controller
                             "url":"http://wechattest.3igtech.com/#/bind"
                         },
                         {    
-                            "type":"view",
-                            "name":"服务号绑定",
-                            "url":"http://wechattest.3igtech.com/#/bind"
-                        },
-                        {    
                             "type":"click",
                             "name":"联系我们",
                             "key":"call_us"
