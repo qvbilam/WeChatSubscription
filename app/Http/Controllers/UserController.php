@@ -102,6 +102,9 @@ class UserController extends Controller
         }
         //判断openId是否被其他手机号绑定
         $count = Driver::where(['openId' => $openId, 'type' => 0])->count('id');
+        if(!$count){
+            return $this->error(2005,'未进行司机认证');
+        }
         if ($count != 0) {
             return $this->error(2002, '该微信号已绑定其他手机号');
         }
