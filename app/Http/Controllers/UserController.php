@@ -49,12 +49,12 @@ class UserController extends Controller
             return $this->error(2001, '未获取到openId');
         }
         $driver = Driver::select('id','phone','status','company')->where(['openId'=>$openId,'type' => 0])->first();
+        if(!$driver){
+            return $this->error(2002,'未通过司机认证');
+        }
         $driver['carType'] = DriverDetailInfo::where(['driverId'=>$driver['id']])->value('car_type');
         if($driver['status'] == 4){
             $driver['bind'] = DriverPositionList::where(['driverId'=>$driver['id']])->select('mac_id','position')->get();
-        }
-        if(!$driver){
-            return $this->error(2002,'未通过司机认证');
         }
         return $this->success(0,'ok',$driver);
 
