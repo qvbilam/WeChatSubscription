@@ -67,12 +67,12 @@ class ButtonController extends Controller
                         {    
                             "type":"view",
                             "name":"司机注册",
-                            "url":"http://wechattest.3igtech.com/bind"
+                            "url":"http://wechattest.3igtech.com/#/bind"
                         },
                         {    
                             "type":"view",
                             "name":"服务号绑定",
-                            "url":"http://wechattest.3igtech.com/bind"
+                            "url":"http://wechattest.3igtech.com/#/bind"
                         },
                         {    
                             "type":"click",
@@ -86,22 +86,22 @@ class ButtonController extends Controller
                         {    
                             "type":"view",
                             "name":"司机提现",
-                            "url":"http://wechattest.3igtech.com/draw"
+                            "url":"http://wechattest.3igtech.com/#/draw"
                         },
                         {    
                             "type":"view",
                             "name":"订单管理",
-                            "url":"http://wechattest.3igtech.com/order"
+                            "url":"http://wechattest.3igtech.com/#/order"
                         },
                         {    
                             "type":"view",
                             "name":"设备绑定",
-                            "url":"http://wechattest.3igtech.com/scan"
+                            "url":"http://wechattest.3igtech.com/#/scan"
                         },
                         {    
                             "type":"view",
                             "name":"设备报修",
-                            "url":"http://wechattest.3igtech.com/device"
+                            "url":"http://wechattest.3igtech.com/#/device"
                         }]
                      }
                      ]
