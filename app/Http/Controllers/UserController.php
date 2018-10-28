@@ -140,6 +140,9 @@ class UserController extends Controller
         try {
             //'openId' => $openId,不加入。用户自行绑定
             $driver = Driver::select('id', 'status')->where(['phone' => $phone, 'type' => $type])->first();
+            if(!$driver){
+                return $this->error(3003,'未进行绑定');
+            }
             if ($driver['status'] != 4) {
                 Driver::where(['driverId' => $driver['id']])->update(['status' => 3]);
             }
