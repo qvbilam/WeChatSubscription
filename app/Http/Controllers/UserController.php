@@ -144,7 +144,7 @@ class UserController extends Controller
                 return $this->error(3003,'该手机号未注册');
             }
             if ($driver['status'] != 4) {
-                Driver::where(['driverId' => $driver['id']])->update(['status' => 3]);
+                Driver::where(['id' => $driver['id']])->update(['status' => 3]);
             }
             Driver::where('id',$driver['id'])->update(['company' => $company]);
             DriverDetailInfo::updateOrCreate(['driverId' => $driver['id']], ['name' => $name, 'car_type' => $carType]);
