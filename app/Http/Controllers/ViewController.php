@@ -75,7 +75,7 @@ class ViewController extends Controller
         if(!isset($data['data'])){
             $data['data'] = [];
         }
-        return self::success(0,'ok',$data['data']);
+        return self::success(0,'ok',['data'=>$data['data']]);
     }
 
     static public function OrderData($driverId, $page = 1, $offset = 5)
