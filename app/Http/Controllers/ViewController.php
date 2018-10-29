@@ -71,8 +71,11 @@ class ViewController extends Controller
         $driverId = $request->input('driverId', 0);
         $page = $request->input('page', 1);
         $offset = self::$offset;
-        $data =  self::OrderData($driverId, $page, $offset);
-        return self::success(0,'ok',$data);
+        $data =  json_decode(self::OrderData($driverId, $page, $offset),true);
+        if(!isset($data['data'])){
+            $data['data'] = [];
+        }
+        return self::success(0,'ok',$data['data']);
     }
 
     static public function OrderData($driverId, $page = 1, $offset = 5)
@@ -169,12 +172,13 @@ class ViewController extends Controller
     }
 
     //请求微信获取用户openid. 参数重定向页面
-    static public function requestWechat($REDIRECT_URI, $scope = 'snsapi_base', $state = 'TEST')
+    static public function requestWechat($REDIRECT_URI='http://wechattest.3igtech.com/#/device', $scope = 'snsapi_userinfo', $state = 'STATE')
     {
         $to_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" . env('TEST_WECHAT_APPID') .
             '&redirect_uri=' . urlencode($REDIRECT_URI) .
             '&response_type=code&scope=' . $scope .
             '&state=' . $state . '#wechat_redirect';
+        return $to_url;
         header("Location:" . $to_url);
     }
 
