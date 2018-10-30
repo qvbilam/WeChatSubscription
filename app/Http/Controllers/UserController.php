@@ -281,7 +281,7 @@ class UserController extends Controller
             return $res['msg'];
         }
         if ($res['result_code'] == 'SUCCESS') {
-            DB::table('drivers')->where('id', $driver['id'])->increment('fetch_fee', $money);
+            DB::table('drivers')->where('id', $driver['id'])->increment('fetch_fee', $money * 100);
             DriverWithdraw::Create(['driver_id' => $driver['id'], 'withdraw_fee' => $money, 'out_trade_no' => $tradeno]);
             return $this->error(0, '提现成功', ['withdr_fee' => $money]);
         } else {
