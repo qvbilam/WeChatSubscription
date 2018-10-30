@@ -69,7 +69,7 @@ class UserController extends Controller
         if(!$money){
             return $this->error(2003,'未获取到用户可提现的钱');
         }
-        $fee = $money['earning_fee'] - $money['fetch_fee'];
+        $fee = ($money['earning_fee'] - $money['fetch_fee']) / 100;
         return $this->success(0,'ok',['earning_fee'=>$money['earning_fee'],'fetch_fee'=>$money['fetch_fee'],'fee'=>$fee]);
 
     }
@@ -262,7 +262,8 @@ class UserController extends Controller
         if (!$driver && !$driver['id']) {
             return $this->error(7002, '您没有通过司机认证');
         }
-        $money = $request->input('money') * 100;
+//        $money = $request->input('money') * 100;
+        $money = $request->input('money');
         $money = (int)$money;
         if (!$money || $money < 100) {
             return $this->error(7003, '提现额度必须大于等于100元');
