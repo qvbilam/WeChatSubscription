@@ -279,8 +279,14 @@ class UserController extends Controller
             return $res['msg'];
         }
         if ($res['result_code'] == 'SUCCESS') {
+            DB::beginTransaction();
+            if ($withdraw_money < $money) {
+                DB::rollback();
+                return $this->error(7004, '欲提额度不能大于可提现额度');
+            }
             DB::table('drivers')->where('id', $driver['id'])->increment('fetch_fee', $money);
             DriverWithdraw::Create(['driver_id' => $driver['id'], 'withdraw_fee' => $money, 'out_trade_no' => $tradeno]);
+            DB::commit();
             return $this->error(0, '提现成功', ['withdr_fee' => $money]);
         } else {
             return $this->error(7005, $res['err_code_des']);
