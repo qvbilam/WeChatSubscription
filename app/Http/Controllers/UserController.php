@@ -262,11 +262,11 @@ class UserController extends Controller
         if (!$driver && !$driver['id']) {
             return $this->error(7002, '您没有通过司机认证');
         }
-        $money = $request->input('money') * 100;
-//        $money = $request->input('money');
+//        $money = $request->input('money') * 100;
+        $money = $request->input('money');
         $money = (int)$money;
         //单位元
-        if (!$money || $money < 1) {
+        if (!$money || $money < 100) {
             return $this->error(7003, '提现额度必须大于等于100元');
         }
         $withdraw_money = $driver['earning_fee'] - $driver['fetch_fee'];
