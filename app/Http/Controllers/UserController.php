@@ -52,9 +52,8 @@ class UserController extends Controller
         if(!$driver){
             return $this->error(2002,'未通过司机认证');
         }
-        $driverInfo = DriverDetailInfo::select('car_type','name')->where(['driverId'=>$driver['id']])->first();
-        $driver['carType'] = $driverInfo['car_tyoe'];
-        $driver['realName'] = $driverInfo['name'];
+        $driver['carType'] = DriverDetailInfo::where(['driverId'=>$driver['id']])->value('car_type');
+        $driver['realName'] = DriverDetailInfo::where(['driverId'=>$driver['id']])->value('name');
         if($driver['status'] == 4){
             $driver['bind'] = DriverPositionList::where(['driverId'=>$driver['id']])->select('mac_id','position')->get();
         }
