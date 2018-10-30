@@ -253,7 +253,7 @@ class UserController extends Controller
     public function withdrawMoneyExecute(Request $request)
     {
         $week = date("w");
-        if ($week != 5) {
+        if ($week != 2) {
             return $this->error(7000, '每周三满100可提');
         }
         $openId = $request->input('openId');
@@ -267,7 +267,8 @@ class UserController extends Controller
 //        $money = $request->input('money') * 100;
         $money = $request->input('money');
         $money = (int)$money;
-        if (!$money || $money < 100) {
+        //单位元
+        if (!$money || $money < 1) {
             return $this->error(7003, '提现额度必须大于等于100元');
         }
         $withdraw_money = $driver['earning_fee'] - $driver['fetch_fee'];
