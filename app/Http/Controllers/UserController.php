@@ -30,14 +30,14 @@ class UserController extends Controller
                 "&secret=" . $SECRET .
                 "&code={$code}&grant_type=authorization_code");
             $uinfo = (array)json_decode($uinfo);
-            if(!$uinfo || !isset($uinfo['openid'])){
-                return $this->error(-10002,'code验证失败');
+            if (!$uinfo || !isset($uinfo['openid'])) {
+                return $this->error(-10002, 'code验证失败');
             }
             $openid = $uinfo['openid'];
             return $this->success(0, 'ok', ['openId' => $openid]);
             //可能来自订单分页
         } else if (isset($_GET['page'])) {
-            return $this->error(-10001,'未获取到openId');
+            return $this->error(-10001, '未获取到openId');
         }
     }
 
@@ -48,16 +48,16 @@ class UserController extends Controller
         if (!$openId) {
             return $this->error(2001, '未获取到openId');
         }
-        $driver = Driver::select('id','phone','status','company')->where(['openId'=>$openId,'type' => 0])->first();
-        if(!$driver){
-            return $this->error(2002,'未通过司机认证');
+        $driver = Driver::select('id', 'phone', 'status', 'company')->where(['openId' => $openId, 'type' => 0])->first();
+        if (!$driver) {
+            return $this->error(2002, '未通过司机认证');
         }
-        $driver['carType'] = DriverDetailInfo::where(['driverId'=>$driver['id']])->value('car_type');
-        $driver['realName'] = DriverDetailInfo::where(['driverId'=>$driver['id']])->value('name');
-        if($driver['status'] == 4){
-            $driver['bind'] = DriverPositionList::where(['driverId'=>$driver['id']])->select('mac_id','position')->get();
+        $driver['carType'] = DriverDetailInfo::where(['driverId' => $driver['id']])->value('car_type');
+        $driver['realName'] = DriverDetailInfo::where(['driverId' => $driver['id']])->value('name');
+        if ($driver['status'] == 4) {
+            $driver['bind'] = DriverPositionList::where(['driverId' => $driver['id']])->select('mac_id', 'position')->get();
         }
-        return $this->success(0,'ok',$driver);
+        return $this->success(0, 'ok', $driver);
 
     }
 
@@ -65,12 +65,14 @@ class UserController extends Controller
     public function getWithdraw(Request $request)
     {
         $phone = $request->input('phone');
-        $money = Driver::select('earning_fee','fetch_fee')->where(['phone'=>$phone,'type'=>0])->first();
-        if(!$money){
-            return $this->error(2003,'未获取到用户可提现的钱');
+        $money = Driver::select('earning_fee', 'fetch_fee')->where(['phone' => $phone, 'type' => 0])->first();
+        if (!$money) {
+            return $this->error(2003, '未获取到用户可提现的钱');
         }
-        $fee = ($money['earning_fee'] - $money['fetch_fee']) / 100;
-        return $this->success(0,'ok',['earning_fee'=>$money['earning_fee'],'fetch_fee'=>$money['fetch_fee'],'fee'=>$fee]);
+        $money['earning_fee'] = $money['earning_fee'] / 100;
+        $money['fetch_fee'] = $money['fetch_fee'] / 100;
+        $fee = $money['earning_fee'] - $money['fetch_fee'];
+        return $this->success(0, 'ok', ['earning_fee' => $money['earning_fee'], 'fetch_fee' => $money['fetch_fee'], 'fee' => $fee]);
 
     }
 
@@ -141,13 +143,13 @@ class UserController extends Controller
         try {
             //'openId' => $openId,不加入。用户自行绑定
             $driver = Driver::select('id', 'status')->where(['phone' => $phone, 'type' => $type])->first();
-            if(!$driver){
-                return $this->error(3003,'该手机号未注册');
+            if (!$driver) {
+                return $this->error(3003, '该手机号未注册');
             }
             if ($driver['status'] != 4) {
                 Driver::where(['id' => $driver['id']])->update(['status' => 3]);
             }
-            Driver::where('id',$driver['id'])->update(['company' => $company]);
+            Driver::where('id', $driver['id'])->update(['company' => $company]);
             DriverDetailInfo::updateOrCreate(['driverId' => $driver['id']], ['name' => $name, 'car_type' => $carType]);
         } catch (\Exception $exception) {
             Log::error('register_error : ' . json_encode($exception));
@@ -155,7 +157,7 @@ class UserController extends Controller
             DB::rollBack();
         }
         DB::commit();
-        return $this->success(0, '完善个人信息成功', ['phone' => $phone,'realName'=>$name,'company'=>$company,'carType'=>$carType]);
+        return $this->success(0, '完善个人信息成功', ['phone' => $phone, 'realName' => $name, 'company' => $company, 'carType' => $carType]);
     }
 
 
