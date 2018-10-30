@@ -69,8 +69,6 @@ class UserController extends Controller
         if (!$money) {
             return $this->error(2003, '未获取到用户可提现的钱');
         }
-        $money['earning_fee'] = $money['earning_fee'] / 100;
-        $money['fetch_fee'] = $money['fetch_fee'] / 100;
         $fee = $money['earning_fee'] - $money['fetch_fee'];
         return $this->success(0, 'ok', ['earning_fee' => $money['earning_fee'], 'fetch_fee' => $money['fetch_fee'], 'fee' => $fee]);
 
@@ -268,20 +266,20 @@ class UserController extends Controller
         $money = $request->input('money');
         $money = (int)$money;
         //单位元
-        if (!$money || $money < 1) {
+        if (!$money || $money < 100) {
             return $this->error(7003, '提现额度必须大于等于100元');
         }
-        $withdraw_money = $driver['earning_fee'] / 100 - $driver['fetch_fee'] / 100;
+        $withdraw_money = $driver['earning_fee'] - $driver['fetch_fee'];
         if ($withdraw_money < $money) {
             return $this->error(7004, '欲提额度不能大于可提现额度');
         }
         $tradeno = $driver['id'] . date('ymdhis', time());
-        $res = $this->drawMoney($openId, $money * 100, $tradeno);
+        $res = $this->drawMoney($openId, $money, $tradeno);
         if (isset($res['error_code'])) {
             return $res['msg'];
         }
         if ($res['result_code'] == 'SUCCESS') {
-            DB::table('drivers')->where('id', $driver['id'])->increment('fetch_fee', $money * 100);
+            DB::table('drivers')->where('id', $driver['id'])->increment('fetch_fee', $money);
             DriverWithdraw::Create(['driver_id' => $driver['id'], 'withdraw_fee' => $money, 'out_trade_no' => $tradeno]);
             return $this->error(0, '提现成功', ['withdr_fee' => $money]);
         } else {
