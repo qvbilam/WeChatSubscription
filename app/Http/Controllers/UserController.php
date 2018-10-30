@@ -271,12 +271,12 @@ class UserController extends Controller
         if (!$money || $money < 1) {
             return $this->error(7003, '提现额度必须大于等于100元');
         }
-        $withdraw_money = $driver['earning_fee'] - $driver['fetch_fee'];
+        $withdraw_money = $driver['earning_fee'] / 100 - $driver['fetch_fee'] / 100;
         if ($withdraw_money < $money) {
             return $this->error(7004, '欲提额度不能大于可提现额度');
         }
         $tradeno = $driver['id'] . date('ymdhis', time());
-        $res = $this->drawMoney($openId, $money, $tradeno);
+        $res = $this->drawMoney($openId, $money * 100, $tradeno);
         if (isset($res['error_code'])) {
             return $res['msg'];
         }
