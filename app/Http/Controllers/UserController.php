@@ -263,29 +263,38 @@ class UserController extends Controller
             return $this->error(7002, '您没有通过司机认证');
         }
 //        $money = $request->input('money') * 100;
+        //获取的钱单位分
         $money = $request->input('money');
         $money = (int)$money;
-        //单位元
+        //单位分。100=1元。 10000=100元
         if (!$money || $money < 100) {
             return $this->error(7003, '提现额度必须大于等于100元');
         }
+        //可提现的钱 = 总共的钱 - 体现过的钱
         $withdraw_money = $driver['earning_fee'] - $driver['fetch_fee'];
+        //如果可提现的钱 小于  要体现的钱就返回错误
         if ($withdraw_money < $money) {
             return $this->error(7004, '欲提额度不能大于可提现额度');
         }
         $tradeno = $driver['id'] . date('ymdhis', time());
         DB::beginTransaction();
+        //给提现过的钱 增加提现了的钱
         DB::table('drivers')->where('id', $driver['id'])->increment('fetch_fee', $money);
+        //追加提现记录
         DriverWithdraw::Create(['driver_id' => $driver['id'], 'withdraw_fee' => $money, 'out_trade_no' => $tradeno]);
+        //调用微信提现
         $res = $this->drawMoney($openId, $money, $tradeno);
         if (isset($res['error_code'])) {
+            //如果提现失败 回滚
             DB::rollBack();
             return $res['msg'];
         }
         if ($res['result_code'] == 'SUCCESS') {
+            //成功提交
             DB::commit();
             return $this->success(0, '提现成功', ['withdr_fee' => $money]);
         } else {
+            //失败回滚
             DB::rollBack();
             return $this->error(7005, $res['err_code_des']);
         }
