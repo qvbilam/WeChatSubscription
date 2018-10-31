@@ -106,6 +106,10 @@ class UserController extends Controller
         if ($count != 0) {
             return $this->error(2002, '该微信号已绑定其他手机号');
         }
+        $bindOpenid = Driver::where(['phone' => $phone, 'type' => 0])->value('openId');
+        if($bindOpenid && $bindOpenid != $openId){
+            return $this->error(2005,'该手机号已被绑定');
+        }
         $res = CheckCode::where([
             'phone' => $phone,
             'code' => $code,
@@ -172,7 +176,7 @@ class UserController extends Controller
         if (!$mac) {
             return $this->error(5002, '该位置并未绑定设备');
         }
-        $problem = $request->input('radio_problem');
+        $problem = $request->input('radio_problem','');
         $describe = $request->input('text_problem', '');
         $res = MacFault::create([
             'mac_id' => $mac,
