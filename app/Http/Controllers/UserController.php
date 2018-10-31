@@ -254,6 +254,7 @@ class UserController extends Controller
     //用户提现
     public function withdrawMoneyExecute(Request $request)
     {
+        DB::beginTransaction();
         $week = date("w");
         if ($week != 3) {
             return $this->error(7000, '每周三满100可提');
@@ -265,6 +266,10 @@ class UserController extends Controller
         $driver = Driver::select('id', 'earning_fee', 'fetch_fee')->where(['openId' => $openId, 'type' => 0])->first();
         if (!$driver && !$driver['id']) {
             return $this->error(7002, '您没有通过司机认证');
+        }
+        $response = self::getRedis($driver['id']);
+        if(!$response){
+            return $this->error(7006, '请勿频繁请求');
         }
 //        $money = $request->input('money') * 100;
         //获取的钱单位分
@@ -281,7 +286,6 @@ class UserController extends Controller
             return $this->error(7004, '欲提额度不能大于可提现额度');
         }
         $tradeno = $driver['id'] . date('ymdhis', time());
-        DB::beginTransaction();
         //给提现过的钱 增加提现了的钱
         DB::table('drivers')->where('id', $driver['id'])->increment('fetch_fee', $money);
         //追加提现记录
@@ -312,6 +316,24 @@ class UserController extends Controller
         $res = $pay->putForward($money, $openId, $tradeno);
         return $res;
 //        return $res['result_code'];
+    }
+
+    //设置redis
+    static private function setRedis($driverId)
+    {
+        Redis::setex("driverid:$driverId",30,time());
+    }
+
+    //检查redis是否存在
+    static private function getRedis($driverId)
+    {
+        $id = Redis::get("driverid:$driverId");
+        if(!$id){
+            self::setRedis($driverId);
+            return true;
+        }
+        return false;
+
     }
 
 }
