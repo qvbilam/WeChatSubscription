@@ -67,7 +67,7 @@ class ButtonController extends Controller
                         {    
                             "type":"view",
                             "name":"司机注册",
-                            "url":"http://wechattest.3igtech.com/#/bind"
+                            "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx908ef6a5e85eceec&redirect_uri=http%3A%2F%2Fwechattest.3igtech.com%2F%23%2Fbind&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
                         },
                         {    
                             "type":"click",
@@ -81,22 +81,22 @@ class ButtonController extends Controller
                         {    
                             "type":"view",
                             "name":"司机提现",
-                            "url":"http://wechattest.3igtech.com/#/draw"
+                            "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx908ef6a5e85eceec&redirect_uri=http%3A%2F%2Fwechattest.3igtech.com%2F%23%2Fdraw&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
                         },
                         {    
                             "type":"view",
                             "name":"订单管理",
-                            "url":"http://wechattest.3igtech.com/#/order"
+                            "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx908ef6a5e85eceec&redirect_uri=http%3A%2F%2Fwechattest.3igtech.com%2F%23%2Forder&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
                         },
                         {    
                             "type":"view",
                             "name":"设备绑定",
-                            "url":"http://wechattest.3igtech.com/#/scan"
+                            "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx908ef6a5e85eceec&redirect_uri=http%3A%2F%2Fwechattest.3igtech.com%2F%23%2Fscan&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
                         },
                         {    
                             "type":"view",
                             "name":"设备报修",
-                            "url":"http://wechattest.3igtech.com/#/device"
+                            "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx908ef6a5e85eceec&redirect_uri=http%3A%2F%2Fwechattest.3igtech.com%2F%23%2Fdevice&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
                         }]
                      }
                      ]
