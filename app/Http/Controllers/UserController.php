@@ -202,7 +202,7 @@ class UserController extends Controller
             return $this->error(6001, '请扫正确的二维码');
         }
         if ($macPool['status'] >= 4) {
-            return $this->error(6002, '该设备已被使用');
+            return $this->error(6002, '该座椅已绑定');
         }
         $position = $request->input('position');
         if ($driverId && $position && $mac && strlen($mac) >= 10) {
@@ -276,7 +276,7 @@ class UserController extends Controller
         $money = $request->input('money');
         $money = (int)$money;
         //单位分。100=1元。 10000=100元
-        if (!$money || $money < 100) {
+        if (!$money || $money < 10000) {
             return $this->error(7003, '提现额度必须大于等于100元');
         }
         //可提现的钱 = 总共的钱 - 体现过的钱
