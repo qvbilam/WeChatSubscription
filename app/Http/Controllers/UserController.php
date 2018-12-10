@@ -206,7 +206,7 @@ class UserController extends Controller
             return $this->error(6002, '该座椅已绑定');
         }
         if($macPosition){
-            return $this->error(6009, '该座椅已绑定');
+            return $this->error(6009, '该设备已绑定');
         }
         $position = $request->input('position');
         if ($driverId && $position && $mac && strlen($mac) >= 10) {
