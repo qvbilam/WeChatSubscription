@@ -216,7 +216,7 @@ class UserController extends Controller
                 return $this->error(6006, '该位置已经绑定了座椅');
             }
             DB::beginTransaction();
-            try {
+//            try {
                 $mac = strval($mac);
                 $host = 'https://' . $_SERVER['SERVER_NAME'];
                 $hostprefix = $host . '/?mac=';
@@ -245,11 +245,11 @@ class UserController extends Controller
                     return $this->error(60043, '绑定失败');
                 }
 
-            } catch (\Exception $exception) {
+//            } catch (\Exception $exception) {
                 DB::rollback();
-                Log::error('driverBind error: ' . json_encode($exception));
+//                Log::error('driverBind error: ' . json_encode($exception));
                 return $this->error(6004, '绑定失败');
-            }
+//            }
             DB::commit();
             return $this->success(0, '绑定成功', [
                 'status' => $driver['status'],
