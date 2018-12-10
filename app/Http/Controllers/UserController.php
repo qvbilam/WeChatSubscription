@@ -232,17 +232,17 @@ class UserController extends Controller
                     'position' => $position,
                 ], ['qrcodeUrl' => $outfile_outer]);
                 if (!$DriverPositionList_rst) {
-                    return $this->error(6004.1, '绑定失败');
+                    return $this->error(60041, '绑定失败');
                 }
                 if ($driver['status'] != 4) {
                     $driver = Driver::where(['id' => $driver['id']])->update(['status' => 4]);
                     if (!$driver) {
-                        return $this->error(6004.2, '绑定失败');
+                        return $this->error(60042, '绑定失败');
                     }
                 }
                 $res = MacPool::where(['mac_id' => $mac])->update(['status' => 4]);
                 if(!$res){
-                    return $this->error(6004.3, '绑定失败');
+                    return $this->error(60043, '绑定失败');
                 }
 
             } catch (\Exception $exception) {
