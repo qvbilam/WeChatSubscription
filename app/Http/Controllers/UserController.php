@@ -107,8 +107,8 @@ class UserController extends Controller
             return $this->error(2002, '该微信号已绑定其他手机号');
         }
         $bindOpenid = Driver::where(['phone' => $phone, 'type' => 0])->value('openId');
-        if($bindOpenid && $bindOpenid != $openId){
-            return $this->error(2005,'该手机号已被绑定');
+        if ($bindOpenid && $bindOpenid != $openId) {
+            return $this->error(2005, '该手机号已被绑定');
         }
         $res = CheckCode::where([
             'phone' => $phone,
@@ -176,7 +176,7 @@ class UserController extends Controller
         if (!$mac) {
             return $this->error(5002, '该位置并未绑定设备');
         }
-        $problem = $request->input('radio_problem','');
+        $problem = $request->input('radio_problem', '');
         $describe = $request->input('text_problem', '');
         $res = MacFault::create([
             'mac_id' => $mac,
@@ -231,10 +231,17 @@ class UserController extends Controller
                     'mac_id' => $mac,
                     'position' => $position,
                 ], ['qrcodeUrl' => $outfile_outer]);
-                if ($DriverPositionList_rst) {
-                    $driver = Driver::updateOrCreate(['id' => $driver['id']], ['status' => 4]);
-                    MacPool::where(['mac_id' => $mac])->update(['status' => 4]);
+                if (!$DriverPositionList_rst) {
+                    return $this->error(6004.1, '绑定失败');
                 }
+                if ($driver['status'] != 4) {
+                    $driver = Driver::where(['id' => $driver['id']])->update(['status' => 4]);
+                    if (!$driver) {
+                        return $this->error(6004.2, '绑定失败');
+                    }
+                }
+                MacPool::where(['mac_id' => $mac])->update(['status' => 4]);
+
             } catch (\Exception $exception) {
                 DB::rollback();
                 Log::error('driverBind error: ' . json_encode($exception));
@@ -268,7 +275,7 @@ class UserController extends Controller
             return $this->error(7002, '您没有通过司机认证');
         }
         $response = self::getRedis($driver['id']);
-        if(!$response){
+        if (!$response) {
             return $this->error(7006, '请勿频繁请求');
         }
 //        $money = $request->input('money') * 100;
@@ -321,14 +328,14 @@ class UserController extends Controller
     //设置redis
     static private function setRedis($driverId)
     {
-        Redis::setex("driverid:$driverId",30,time());
+        Redis::setex("driverid:$driverId", 30, time());
     }
 
     //检查redis是否存在
     static private function getRedis($driverId)
     {
         $id = Redis::get("driverid:$driverId");
-        if(!$id){
+        if (!$id) {
             self::setRedis($driverId);
             return true;
         }
