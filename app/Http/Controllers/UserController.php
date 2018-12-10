@@ -240,7 +240,10 @@ class UserController extends Controller
                         return $this->error(6004.2, '绑定失败');
                     }
                 }
-                MacPool::where(['mac_id' => $mac])->update(['status' => 4]);
+                $res = MacPool::where(['mac_id' => $mac])->update(['status' => 4]);
+                if(!$res){
+                    return $this->error(6004.3, '绑定失败');
+                }
 
             } catch (\Exception $exception) {
                 DB::rollback();
