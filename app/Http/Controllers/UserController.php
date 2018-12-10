@@ -198,11 +198,15 @@ class UserController extends Controller
         $driverId = Driver::where(['openId' => $openId, 'type' => 0])->value('id');
         $mac = $request->input('mac');
         $macPool = MacPool::select('imei', 'status')->where(['mac_id' => $mac])->first();
+        $macPosition = DriverPositionList::where(['mac_id' => $mac])->first();
         if (!$macPool) {
             return $this->error(6001, '请扫正确的二维码');
         }
         if ($macPool['status'] >= 4) {
             return $this->error(6002, '该座椅已绑定');
+        }
+        if($macPosition){
+            return $this->error(6009, '该座椅已绑定');
         }
         $position = $request->input('position');
         if ($driverId && $position && $mac && strlen($mac) >= 10) {
@@ -216,7 +220,7 @@ class UserController extends Controller
                 return $this->error(6006, '该位置已经绑定了座椅');
             }
             DB::beginTransaction();
-//            try {
+            try {
                 $mac = strval($mac);
                 $host = 'https://' . $_SERVER['SERVER_NAME'];
                 $hostprefix = $host . '/?mac=';
@@ -236,20 +240,14 @@ class UserController extends Controller
                 }
                 if ($driver['status'] != 4) {
                     $driver = Driver::where(['id' => $driver['id']])->update(['status' => 4]);
-                    if (!$driver) {
-                        return $this->error(60042, '绑定失败');
-                    }
                 }
                 $res = MacPool::where(['mac_id' => $mac])->update(['status' => 4]);
-                if(!$res){
-                    return $this->error(60043, '绑定失败');
-                }
 
-//            } catch (\Exception $exception) {
+            } catch (\Exception $exception) {
                 DB::rollback();
-//                Log::error('driverBind error: ' . json_encode($exception));
+                Log::error('driverBind error: ' . json_encode($exception));
                 return $this->error(6004, '绑定失败');
-//            }
+            }
             DB::commit();
             return $this->success(0, '绑定成功', [
                 'status' => $driver['status'],
