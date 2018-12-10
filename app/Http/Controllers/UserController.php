@@ -203,7 +203,7 @@ class UserController extends Controller
             return $this->error(6001, '请扫正确的二维码');
         }
         if ($macPool['status'] >= 4) {
-            return $this->error(6002, '该座椅已绑定');
+            return $this->error(6002, '该设备已绑定');
         }
         if($macPosition){
             return $this->error(6009, '该设备已绑定');
