@@ -35,6 +35,7 @@ Route::any('responseMsg', 'MessageController@responseMsg');                 //�
 /*获取用户信息*/
 Route::any('getUserInfo', 'UserController@getUserInfo');                    //获取单个用户信息
 Route::any('getQrCode', 'UserController@getQrCode');                         //获取单个用户信息
+Route::any('exitLogin', 'UserController@exitLogin');                         //退出登录
 
 /*页面*/
 Route::any('register', 'ViewController@register');                          //司机注册 ---- 普通

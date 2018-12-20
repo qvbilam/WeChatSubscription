@@ -344,4 +344,21 @@ class UserController extends Controller
 
     }
 
+//    解除绑定
+    public function exitLogin(Request $request)
+    {
+        $phone = $request->input('phone');
+        if(!$phone){
+            return $this->error(8001,'未获取到用户信息');
+        }
+        $driver =  Driver::where(['phone'=>$phone])->first();
+        if(!$driver){
+            return $this->error(8002,'用户不存在');
+        }
+        $res = Driver::where(['phone'=>$phone])->update(['openId'=>'']);
+        if(!$res){
+            return $this->error(8003,'退出失败');
+        }
+        return $this->success(0,'ok');
+    }
 }
